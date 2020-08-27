@@ -1,9 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect
+  } from 'react-router-dom'
 
-function App() {
-    return <h1>Hello React!</h1>;
-}
+  import Top from './views/Top.js'
+  import Modal from './ModalToolBar.js'
+
+  const App = () => {
+    return (
+     
+        <Top/>
+
+    )
+
+  }
+  export default App
 
 if (document.getElementById('app')) {
     ReactDOM.render(<App />, document.getElementById('app'));
