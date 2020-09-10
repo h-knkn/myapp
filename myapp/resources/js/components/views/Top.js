@@ -1,9 +1,10 @@
-import React from 'react'
-
+import React , {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import ModalToolBar from '../ModalToolBar';
+import Button from '@material-ui/core/Button';
+import login_modal from '../../../../public/img/login_modal.png';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -16,26 +17,31 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: '#FF99FF',
   },
+  loginButton: {
+    backgroundColor: '#FFCC66',
+  },
   button: {
     textAlign: 'center',
     marginTop: 40,
   },
 }));
 
-export default function Top() {
+const Top = (props) => {
     const classes = useStyles();
-
+    
     const style = {
        textAlign: 'right',
        padding: '1.5%',
-      };
+    };
 
 
     return (
         <React.Fragment>
         <div className="top">
             <div style={style}>
-              <ModalToolBar />
+            <Button variant="outlined" className={classes.loginButton} onClick={props.handleClickOpen}>
+              <img src={login_modal}/>
+            </Button>
             </div>
             <div className="top-text">
               <h1>Baby's日記</h1>
@@ -84,4 +90,6 @@ export default function Top() {
         </React.Fragment>
     );
 }
+
+export default Top
 

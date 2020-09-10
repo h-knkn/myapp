@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import {
     BrowserRouter as Router,
@@ -7,14 +7,28 @@ import {
     Link,
     Redirect
   } from 'react-router-dom'
+  import {SignupModal,Top} from './views/index';
 
-  import Top from './views/Top.js'
-  import Modal from './ModalToolBar.js'
 
   const App = () => {
+
+    const [open, setOpen] = useState(false);
+    
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+
     return (
-     
-        <Top/>
+      <div>
+        <Top handleClickOpen={handleClickOpen}/>
+        <SignupModal open={open} handleClose={handleClose}/>
+      </div>
 
     )
 
