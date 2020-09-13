@@ -39,7 +39,7 @@ const Top = (props) => {
         <React.Fragment>
         <div className="top">
             <div style={style}>
-            <Button variant="outlined" className={classes.loginButton} onClick={props.handleClickOpen}>
+            <Button variant="outlined" className={classes.loginButton} onClick={props.onClickSignup}>
               <img src={login_modal}/>
             </Button>
             </div>

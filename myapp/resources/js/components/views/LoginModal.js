@@ -6,7 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,8 +32,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-const SignupModal = (props) => {
-
+const LoginModal = (props) => {
     const classes = useStyles();
 
   return (
@@ -46,19 +44,16 @@ const SignupModal = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title"　className={classes.title}>新規登録</DialogTitle>
+        <DialogTitle id="alert-dialog-title"　className={classes.title}>ログイン</DialogTitle>
         <DialogContent className={classes.content}>
             <div className={classes.text}> 
-                <TextField id="standard-basic" label="名前" fullWidth　rows={1}/>
                 <TextField id="standard-basic" label="メールアドレス" fullWidth　rows={1}/>
                 <TextField id="standard-basic" label="パスワード" fullWidth　rows={1}/>
-                <TextField id="standard-basic" label="パスワード確認" fullWidth　rows={1}/>
             </div>
         </DialogContent>
-        <p className={classes.toLogin} onClick={props.onClickLogin}>ログインはこちら</p>
         <DialogActions>
           <Button onClick={props.handleClose} className={classes.signUpButton}>
-            登録
+            ログイン
           </Button>
         </DialogActions>
       </Dialog>
@@ -67,4 +62,4 @@ const SignupModal = (props) => {
 }
 
 
-export default SignupModal
+export default LoginModal

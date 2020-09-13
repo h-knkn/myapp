@@ -93594,22 +93594,41 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var App = function App() {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
-      open = _useState2[0],
-      setOpen = _useState2[1];
+      openLogin = _useState2[0],
+      setOpenLogin = _useState2[1];
+
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      openSignup = _useState4[0],
+      setOpenSignup = _useState4[1];
 
   var handleClickOpen = function handleClickOpen() {
-    setOpen(true);
+    setOpenLogin(true);
+    setOpenSignup(true);
   };
 
   var handleClose = function handleClose() {
-    setOpen(false);
+    setOpenLogin(false);
+    setOpenSignup(false);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_views_index__WEBPACK_IMPORTED_MODULE_3__["Top"], {
-    handleClickOpen: handleClickOpen
+    onClickSignup: function onClickSignup() {
+      return setOpenSignup(true);
+    }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_views_index__WEBPACK_IMPORTED_MODULE_3__["SignupModal"], {
-    open: open,
-    handleClose: handleClose
+    open: openSignup,
+    handleClose: function handleClose() {
+      return setOpenSignup(false);
+    },
+    onClickLogin: function onClickLogin() {
+      return setOpenLogin(true);
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_views_index__WEBPACK_IMPORTED_MODULE_3__["LoginModal"], {
+    open: openLogin,
+    handleClose: function handleClose() {
+      return setOpenLogin(false);
+    }
   }));
 };
 
@@ -93618,6 +93637,91 @@ var App = function App() {
 if (document.getElementById('app')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/views/LoginModal.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/views/LoginModal.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/index.js");
+/* harmony import */ var _material_ui_core_Dialog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core/Dialog */ "./node_modules/@material-ui/core/esm/Dialog/index.js");
+/* harmony import */ var _material_ui_core_DialogActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core/DialogActions */ "./node_modules/@material-ui/core/esm/DialogActions/index.js");
+/* harmony import */ var _material_ui_core_DialogContent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/DialogContent */ "./node_modules/@material-ui/core/esm/DialogContent/index.js");
+/* harmony import */ var _material_ui_core_DialogTitle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/DialogTitle */ "./node_modules/@material-ui/core/esm/DialogTitle/index.js");
+/* harmony import */ var _material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/TextField */ "./node_modules/@material-ui/core/esm/TextField/index.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
+
+
+
+
+
+
+
+
+var useStyles = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_7__["makeStyles"])(function (theme) {
+  return {
+    text: {
+      '& > *': {
+        margin: theme.spacing(1)
+      }
+    },
+    title: {
+      textAlign: 'center',
+      backgroundColor: '#FFCC66'
+    },
+    content: {
+      padding: 50
+    },
+    signUpButton: {
+      margin: 'auto',
+      backgroundColor: '#FFCC66'
+    },
+    toLogin: {
+      textAlign: 'center',
+      margin: 0
+    }
+  };
+});
+
+var LoginModal = function LoginModal(props) {
+  var classes = useStyles();
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Dialog__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    open: props.open,
+    onClose: props.handleClose,
+    "aria-labelledby": "alert-dialog-title",
+    "aria-describedby": "alert-dialog-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_DialogTitle__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    id: "alert-dialog-title",
+    className: classes.title
+  }, "\u30ED\u30B0\u30A4\u30F3"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_DialogContent__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    className: classes.content
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: classes.text
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    id: "standard-basic",
+    label: "\u30E1\u30FC\u30EB\u30A2\u30C9\u30EC\u30B9",
+    fullWidth: true,
+    rows: 1
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    id: "standard-basic",
+    label: "\u30D1\u30B9\u30EF\u30FC\u30C9",
+    fullWidth: true,
+    rows: 1
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_DialogActions__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    onClick: props.handleClose,
+    className: classes.signUpButton
+  }, "\u30ED\u30B0\u30A4\u30F3"))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (LoginModal);
 
 /***/ }),
 
@@ -93639,6 +93743,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_DialogTitle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/DialogTitle */ "./node_modules/@material-ui/core/esm/DialogTitle/index.js");
 /* harmony import */ var _material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/TextField */ "./node_modules/@material-ui/core/esm/TextField/index.js");
 /* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+
 
 
 
@@ -93707,7 +93813,8 @@ var SignupModal = function SignupModal(props) {
     fullWidth: true,
     rows: 1
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
-    className: classes.toLogin
+    className: classes.toLogin,
+    onClick: props.onClickLogin
   }, "\u30ED\u30B0\u30A4\u30F3\u306F\u3053\u3061\u3089"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_DialogActions__WEBPACK_IMPORTED_MODULE_3__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_1__["default"], {
     onClick: props.handleClose,
     className: classes.signUpButton
@@ -93775,7 +93882,7 @@ var Top = function Top(props) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_4__["default"], {
     variant: "outlined",
     className: classes.loginButton,
-    onClick: props.handleClickOpen
+    onClick: props.onClickSignup
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
     src: _public_img_login_modal_png__WEBPACK_IMPORTED_MODULE_5___default.a
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -93835,7 +93942,7 @@ var Top = function Top(props) {
 /*!************************************************!*\
   !*** ./resources/js/components/views/index.js ***!
   \************************************************/
-/*! exports provided: Top, SignupModal */
+/*! exports provided: Top, SignupModal, LoginModal */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -93845,6 +93952,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var _SignupModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SignupModal */ "./resources/js/components/views/SignupModal.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SignupModal", function() { return _SignupModal__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony import */ var _LoginModal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LoginModal */ "./resources/js/components/views/LoginModal.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LoginModal", function() { return _LoginModal__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
 
 
 

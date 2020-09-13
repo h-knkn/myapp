@@ -7,29 +7,31 @@ import {
     Link,
     Redirect
   } from 'react-router-dom'
-  import {SignupModal,Top} from './views/index';
+  import {SignupModal,Top, LoginModal} from './views/index';
 
 
   const App = () => {
 
-    const [open, setOpen] = useState(false);
+    const [openLogin, setOpenLogin] = useState(false);
+    const [openSignup, setOpenSignup] = useState(false);
     
-
     const handleClickOpen = () => {
-      setOpen(true);
+      setOpenLogin(true);
+      setOpenSignup(true);
     };
   
     const handleClose = () => {
-      setOpen(false);
+      setOpenLogin(false);
+      setOpenSignup(false);
     };
 
 
     return (
       <div>
-        <Top handleClickOpen={handleClickOpen}/>
-        <SignupModal open={open} handleClose={handleClose}/>
+        <Top onClickSignup={() => setOpenSignup(true)}/>
+        <SignupModal open={openSignup} handleClose={() => setOpenSignup(false)}  onClickLogin={() => setOpenLogin(true)}/>
+        <LoginModal open={openLogin} handleClose={() => setOpenLogin(false)} />
       </div>
-
     )
 
   }
