@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState, useEffect, useCallback} from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -33,7 +33,54 @@ const useStyles = makeStyles((theme) => ({
 
 
 const LoginModal = (props) => {
-    const classes = useStyles();
+
+  const classes = useStyles();
+
+  const [email , setEmail] = useState("");
+  const [password , setPassword] = useState("");
+
+  const inputEmail = useCallback((event) => {
+    setEmail(event.target.value)
+  },[setEmail]);
+
+  const inputPassword = useCallback((event) => {
+    setPassword(event.target.value)
+  },[setPassword]);
+
+  const Login = user => {
+    return axios
+        .post('api/login', user, {
+          email: user.email,
+          password: user.password
+        },{
+           headers: {'Content-Type': 'application/json'}
+          })
+        .then(res => {
+          localStorage.setItem('access_token', res.data.access_token)
+          console.log(res.data.access_token);
+
+          return props.handleClose() 
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    const user = {
+      email: email,
+      password: password
+    }
+    console.log(user.email);
+    Login(user).then(res=>{
+      if(res) {
+        user.history.push('/userprofile')
+        alert("ログインしました");
+      }
+    })
+  }
+
 
   return (
 
@@ -47,12 +94,24 @@ const LoginModal = (props) => {
         <DialogTitle id="alert-dialog-title"　className={classes.title}>ログイン</DialogTitle>
         <DialogContent className={classes.content}>
             <div className={classes.text}> 
-                <TextField id="standard-basic" label="メールアドレス" fullWidth　rows={1}/>
-                <TextField id="standard-basic" label="パスワード" fullWidth　rows={1}/>
+              <TextField
+              id="standard-basic" 
+              label="メールアドレス"
+              value={email}
+              onChange={inputEmail}
+              fullWidth
+              rows={1}/>
+              <TextField
+              id="standard-basic"
+              label="パスワード"
+              value={password}
+              onChange={inputPassword}
+              fullWidth
+              rows={1}/>
             </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.handleClose} className={classes.signUpButton}>
+          <Button onClick={onSubmit} className={classes.signUpButton}>
             ログイン
           </Button>
         </DialogActions>
