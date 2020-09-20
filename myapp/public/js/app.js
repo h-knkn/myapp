@@ -93574,6 +93574,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 /* harmony import */ var _views_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./views/index */ "./resources/js/components/views/index.js");
+/* harmony import */ var _history__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./history */ "./resources/js/components/history.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -93590,7 +93591,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
- // import {UserPage} from './views/UserPage.js';
+
+
 
 var App = function App() {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
@@ -93613,7 +93615,9 @@ var App = function App() {
     setOpenSignup(false);
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_views_index__WEBPACK_IMPORTED_MODULE_3__["Top"], {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Router"], {
+    history: _history__WEBPACK_IMPORTED_MODULE_4__["default"]
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_views_index__WEBPACK_IMPORTED_MODULE_3__["Top"], {
     onClickSignup: function onClickSignup() {
       return setOpenSignup(true);
     }
@@ -93630,7 +93634,11 @@ var App = function App() {
     handleClose: function handleClose() {
       return setOpenLogin(false);
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_views_index__WEBPACK_IMPORTED_MODULE_3__["UserPage"], null));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Route"], {
+    path: "/userprofile",
+    exact: true,
+    component: _views_index__WEBPACK_IMPORTED_MODULE_3__["UserPage"]
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
@@ -93638,6 +93646,21 @@ var App = function App() {
 if (document.getElementById('app')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
 }
+
+/***/ }),
+
+/***/ "./resources/js/components/history.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/history.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var history__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! history */ "./node_modules/history/esm/history.js");
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(history__WEBPACK_IMPORTED_MODULE_0__["createBrowserHistory"])());
 
 /***/ }),
 
@@ -93659,6 +93682,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_DialogTitle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/DialogTitle */ "./node_modules/@material-ui/core/esm/DialogTitle/index.js");
 /* harmony import */ var _material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/TextField */ "./node_modules/@material-ui/core/esm/TextField/index.js");
 /* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -93670,6 +93694,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return; var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -93733,8 +93758,11 @@ var LoginModal = function LoginModal(props) {
         'Content-Type': 'application/json'
       }
     }).then(function (res) {
+      console.log(user.email);
       localStorage.setItem('access_token', res.data.access_token);
       console.log(res.data.access_token);
+      alert("ログインしました");
+      props.history.push('/userprofile');
       return props.handleClose();
     })["catch"](function (err) {
       console.log(err);
@@ -93747,10 +93775,10 @@ var LoginModal = function LoginModal(props) {
       email: email,
       password: password
     };
-    console.log(user.email);
+    console.log(user.email + "二回目");
     Login(user).then(function (res) {
       if (res) {
-        user.history.push('/userprofile');
+        props.history.push('/userprofile');
         alert("ログインしました");
       }
     });
@@ -93788,7 +93816,7 @@ var LoginModal = function LoginModal(props) {
   }, "\u30ED\u30B0\u30A4\u30F3"))));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (LoginModal);
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_8__["withRouter"])(LoginModal));
 
 /***/ }),
 
@@ -94146,8 +94174,9 @@ var UserPage = function UserPage() {
         Authorization: "Bearer".concat(localStorage.access_token)
       }
     }).then(function (res) {
-      localStorage.setItem('access_token', res.access_token);
-      console.log(res.data);
+      // localStorage.setItem('access_token', res.access_token)
+      console.log(res);
+      setName();
       return props.handleClose();
     })["catch"](function (err) {
       console.log(err);
@@ -94157,13 +94186,15 @@ var UserPage = function UserPage() {
   //     setName({name:res.user.name})
   //   });
   // }
-  // useEffect(() => {
-  //   ToProfile().then(res =>{
-  //     setName({name:res.data.name})
-  //   });
-  // },[name]);
 
 
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    ToProfile().then(function (res) {
+      setName({
+        name: res.data.name
+      });
+    });
+  }, [setName]);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "\u3053\u3093\u306B\u3061\u306F", name, "\u3055\u3093");
 };
 

@@ -21,8 +21,9 @@ const UserPage = () => {
            headers: {Authorization:`Bearer${localStorage.access_token}`}
           })
         .then(res => {
-          localStorage.setItem('access_token', res.access_token)
-          console.log(res.data);
+          // localStorage.setItem('access_token', res.access_token)
+          console.log(res);
+          setName();
           return props.handleClose() 
         })
         .catch(err => {
@@ -36,11 +37,11 @@ const UserPage = () => {
   //   });
   // }
 
-  // useEffect(() => {
-  //   ToProfile().then(res =>{
-  //     setName({name:res.data.name})
-  //   });
-  // },[name]);
+  useEffect(() => {
+    ToProfile().then(res =>{
+      setName({name:res.data.name})
+    });
+  },[setName]);
 
 
   return (

@@ -6,6 +6,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import {withRouter} from  'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,8 +57,11 @@ const LoginModal = (props) => {
            headers: {'Content-Type': 'application/json'}
           })
         .then(res => {
+          console.log(user.email);
           localStorage.setItem('access_token', res.data.access_token)
           console.log(res.data.access_token);
+          alert("ログインしました");
+          props.history.push('/userprofile')
 
           return props.handleClose() 
         })
@@ -72,10 +76,10 @@ const LoginModal = (props) => {
       email: email,
       password: password
     }
-    console.log(user.email);
+    console.log(user.email + "二回目");
     Login(user).then(res=>{
       if(res) {
-        user.history.push('/userprofile')
+        props.history.push('/userprofile')
         alert("ログインしました");
       }
     })
@@ -121,4 +125,4 @@ const LoginModal = (props) => {
 }
 
 
-export default LoginModal
+export default (withRouter(LoginModal))

@@ -2,15 +2,15 @@ import React , {useState, useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import { Component } from 'react';
 import {
-    BrowserRouter as Router ,
+    Router,
     Switch,
     Route,
     Link,
     Redirect
   } from 'react-router-dom'
   import {SignupModal,Top, LoginModal, UserPage} from './views/index';
-  // import {UserPage} from './views/UserPage.js';
-
+  import history from './history';
+  
 
   const App = () => {
 
@@ -30,11 +30,12 @@ import {
 
     return (
       <div>
+        <Router history={history}>
         <Top onClickSignup={() => setOpenSignup(true)}/>
         <SignupModal open={openSignup} handleClose={() => setOpenSignup(false)}  onClickLogin={() => setOpenLogin(true)} />
         <LoginModal open={openLogin} handleClose={() => setOpenLogin(false)} />
-       
-        <UserPage/>
+        <Route path="/userprofile" exact component={UserPage} />
+        </Router>
       </div>
     )
 
