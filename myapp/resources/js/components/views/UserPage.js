@@ -15,21 +15,21 @@ const UserPage = () => {
 
   const [name, setName] = useState("");
 
-  const ToProfile = () => {
-    return axios
-        .get('api/user', {
-           headers: {Authorization:`Bearer${localStorage.access_token}`}
-          })
-        .then(res => {
-          // localStorage.setItem('access_token', res.access_token)
-          console.log(res);
-          setName();
-          return props.handleClose() 
-        })
-        .catch(err => {
-          console.log(err)
-        })
-  }
+  // const ToProfile = () => {
+  //   return axios
+  //       .get('api/user', {
+  //          headers: {Authorization:`Bearer${localStorage.access_token}`}
+  //         })
+  //       .then(res => {
+  //         // localStorage.setItem('access_token', res.access_token)
+  //         console.log(res);
+  //         setName();
+  //         return props.handleClose() 
+  //       })
+  //       .catch(err => {
+  //         console.log(err)
+  //       })
+  // }
 
   // componentDidMount = () => {
   //   ToProfile().then(res =>{
@@ -37,15 +37,15 @@ const UserPage = () => {
   //   });
   // }
 
-  useEffect(() => {
-    ToProfile().then(res =>{
-      setName({name:res.data.name})
-    });
-  },[setName]);
+  // useEffect(() => {
+  //   ToProfile().then(res =>{
+  //     setName({name:res.data.name})
+  //   });
+  // },[setName]);
 
 
   return (
-  <div>こんにちは{name}さん</div> 
+  <div>こんにちはさん</div> 
     
   );
 
