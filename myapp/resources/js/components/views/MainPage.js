@@ -1,14 +1,5 @@
 import React , {useState, useEffect} from 'react';
-import ReactDOM from 'react-dom';
-import { Component } from 'react';
-import {
-    Router,
-    Switch,
-    Route,
-    Link,
-    Redirect
-  } from 'react-router-dom'
-  import {SignupModal,Top, LoginModal, UserPage} from './index';
+import {SignupModal,Top, LoginModal, UserPage} from './index';
   
   
 

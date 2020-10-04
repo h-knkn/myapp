@@ -12,6 +12,8 @@ import {
 
 } from "./views";
 
+import PrivateRoute from './PrivateRoute';
+
 
 
 
@@ -20,10 +22,10 @@ const Routes = () => {
     return(
         <Router>
         <Switch>
-        {/* <Redirect exact from="/" to="/" /> */}
           <Route path="/" exact component={MainPage}/>     
-          <Route path="/userprofile" exact component={UserPage}/>     
+          <Route path="/userprofile" exact component={UserPage}/>
 
+           {/* <PrivateRoute path='/userprofile' exact component={UserPage}/> */}
         </Switch>
         </Router>
     )

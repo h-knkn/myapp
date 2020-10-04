@@ -44,8 +44,8 @@ class JWTAuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (! $token = Auth::guard('api')->attempt($credentials)) {
+            return response()->json(['error' => '名前、パスワードが間違っています'], 401);
         }
 
         return $this->respondWithToken($token);
@@ -72,11 +72,20 @@ class JWTAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout()
-    {
-        auth()->logout();
+    // public function logout()
+    // {
+    //     auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+    //     return response()->json(['message' => 'Successfully logged out']);
+    // }
+
+    public function logout() {
+        Auth::guard('api')->logout();
+    
+        return response()->json([
+            'status' => 'success',
+            'message' => 'logout'
+        ], 200);
     }
 
     /**

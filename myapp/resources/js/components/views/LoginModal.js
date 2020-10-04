@@ -6,6 +6,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,6 +40,9 @@ const LoginModal = (props) => {
 
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [error, setError] = useState('');
+  const [formSubmitting, setFormSubmitting] = useState('');
 
   const inputEmail = useCallback((event) => {
     setEmail(event.target.value)
@@ -46,6 +51,8 @@ const LoginModal = (props) => {
   const inputPassword = useCallback((event) => {
     setPassword(event.target.value)
   },[setPassword]);
+
+  const history = useHistory();
 
   const Login = user => {
     return axios
@@ -56,11 +63,12 @@ const LoginModal = (props) => {
            headers: {'Content-Type': 'application/json'}
           })
         .then(res => {
-          console.log(user.email);
           localStorage.setItem('access_token', res.data.access_token)
-          console.log(res.data.access_token);
-          alert("ログインしました");
+          // console.log(res.data.access_token);
+          // console.log(user);
+          // alert("ログインしました");
           // props.history.push('/userprofile')
+          // console.log(res)
 
           return props.handleClose() 
         })
@@ -75,19 +83,29 @@ const LoginModal = (props) => {
       email: email,
       password: password
     }
-    console.log(user.email + "二回目");
-    Login(user).then(res=>{
-      if(res) {
-       
-        alert("ログインしました");
+    const appState = {
+      isLoggedIn: true
+    };
+    Login(user).then(res => {
+      // console.log(res);
+      // return res;
+      if(user){
+        alert('ログインできた');
+        console.log(user);
+        history.push('/userprofile')
+      }
+      else {
+        alert('ログインできない');
       }
     })
+
   }
 
 
   return (
 
     <div>
+     
       <Dialog
         open={props.open}
         onClose={props.handleClose}
@@ -97,6 +115,7 @@ const LoginModal = (props) => {
         <DialogTitle id="alert-dialog-title"　className={classes.title}>ログイン</DialogTitle>
         <DialogContent className={classes.content}>
             <div className={classes.text}> 
+            <form onSubmit={onSubmit}>
               <TextField
               id="standard-basic" 
               label="メールアドレス"
@@ -111,14 +130,16 @@ const LoginModal = (props) => {
               onChange={inputPassword}
               fullWidth
               rows={1}/>
+          <Button type="submit" className={classes.signUpButton}>
+            ログイン
+          </Button>
+                </form>
             </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onSubmit} className={classes.signUpButton}>
-            ログイン
-          </Button>
         </DialogActions>
       </Dialog>
+    
     </div>
   );
 }

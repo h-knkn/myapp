@@ -1,6 +1,5 @@
-import React , {useState, useEffect} from 'react';
-import ReactDOM from 'react-dom';
-import { Component } from 'react';
+import ReactDOM from 'react-dom'
+import React from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -17,7 +16,7 @@ import {
       <div>
         <Router>
         <Switch>
-        <Routes />
+        <Routes/>
         </Switch>
         </Router>
       </div>

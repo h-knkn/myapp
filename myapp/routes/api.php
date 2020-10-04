@@ -15,14 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::group([
-    'prefix' => 'auth',
-    'middleware' => 'auth:api'
-], function () {
-    Route::post('logout', 'JWTAuthController@logout');
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('logout', 'JWTAuthController@logout')->name('api.jwt.logout');
     Route::post('refresh', 'JWTAuthController@refresh');
-    Route::get('me', 'JWTAuthController@me');
 });
+
+Route::get('unauthorized', function() {
+    return response()->json([
+        'status' => 'error',
+        'message' => 'ログインしてください'
+    ], 401);
+})->name('api.jwt.unauthorized');
 
 Route::group(['middleware' => 'auth:api'], function(){
     Route::get('user', 'JWTAuthController@user')->name('api.jwt.user');
@@ -30,4 +33,4 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 
 Route::post('register', 'JWTAuthController@register')->name('api.jwt.register');
-Route::post('login', 'JWTAuthController@login');
+Route::post('login', 'JWTAuthController@login')->name('api.jwt.login');

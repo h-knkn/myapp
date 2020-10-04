@@ -7,50 +7,42 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
-import { Component } from 'react';
 
 
 
-const UserPage = () => {
+const UserPage = (props) => {
 
-  const [name, setName] = useState("");
+  
+  const [userData, setUserData] = useState([]);
+  
 
-  // const ToProfile = () => {
-  //   return axios
-  //       .get('api/user', {
-  //          headers: {Authorization:`Bearer${localStorage.access_token}`}
-  //         })
-  //       .then(res => {
-  //         // localStorage.setItem('access_token', res.access_token)
-  //         console.log(res);
-  //         setName();
-  //         return props.handleClose() 
-  //       })
-  //       .catch(err => {
-  //         console.log(err)
-  //       })
-  // }
+  useEffect(() => {
+    axios
+    .get('api/user', {
+               headers: {Authorization:`Bearer${localStorage.access_token}`}
+              })
+            .then(res => {
+              console.log(res);
+              console.log(res.data);
+              setUserData(res.data);
+            })
+            .catch(err => {
+              console.log(err)
+            })
+  }, []);
 
-  // componentDidMount = () => {
-  //   ToProfile().then(res =>{
-  //     setName({name:res.user.name})
-  //   });
-  // }
-
-  // useEffect(() => {
-  //   ToProfile().then(res =>{
-  //     setName({name:res.data.name})
-  //   });
-  // },[setName]);
 
 
   return (
-  <div>こんにちはさん</div> 
+  <div>
+    <div>こんにちは{userData.name}さん</div> 
+    <div>あなたのメールアドレスは{userData.email}です</div> 
+  </div>
     
   );
 
   
-  }
+}
   
   
   export default UserPage
