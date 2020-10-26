@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 
@@ -63,17 +64,27 @@ const LoginModal = (props) => {
            headers: {'Content-Type': 'application/json'}
           })
         .then(res => {
-          localStorage.setItem('access_token', res.data.access_token)
-          // console.log(res.data.access_token);
-          // console.log(user);
-          // alert("ログインしました");
-          // props.history.push('/userprofile')
-          // console.log(res)
-
+          localStorage.setItem('access_token', res.data.access_token);
+          const token = localStorage.getItem('access_token');
+          const isAuth = {setIsLoggedIn:token};
+          console.log(isLoggedIn);
+          // setIsLoggedIn(true);
+          console.log(isAuth);
+          console.log(user.token);
+          if(token){
+            alert('ログインできた');
+            // 入力欄の値であってユーザー情報ではない
+            console.log(user);
+            isAuth ? history.push('/userprofile') : <Redirect to={'/'} />;
+            // if (isLoggedIn === true) {
+            //    history.push('/userprofile');
+            // }
+            // history.push('/userprofile');
+          }
           return props.handleClose() 
         })
-        .catch(err => {
-          console.log(err)
+        .catch(error => {
+          alert("名前、パスワードが一致しません。");
         })
   }
 
@@ -83,22 +94,9 @@ const LoginModal = (props) => {
       email: email,
       password: password
     }
-    const appState = {
-      isLoggedIn: true
-    };
-    Login(user).then(res => {
-      // console.log(res);
-      // return res;
-      if(user){
-        alert('ログインできた');
-        console.log(user);
-        history.push('/userprofile')
-      }
-      else {
-        alert('ログインできない');
-      }
-    })
-
+    if(user.email && user.password) {
+    Login(user)
+    }
   }
 
 

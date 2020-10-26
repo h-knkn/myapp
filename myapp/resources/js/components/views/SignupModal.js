@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
+import { useForm } from 'react-hook-form'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
       signUpButton: {
         margin: 'auto',
         backgroundColor: '#FFCC66',
+        '&:hover': {
+          background: "#FFCC66",
+          opacity: 0.6,
+       },
       },
       toLogin: {
         textAlign: 'center',
@@ -41,6 +46,9 @@ const SignupModal = (props) => {
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
   const [password_confirmation , setPassword_confirmation] = useState("");
+
+  const { register, handleSubmit, errors } = useForm();
+  // const onSubmit = data => console.log(data);
 
   const inputName = useCallback((event) => {
     setName(event.target.value)
@@ -94,6 +102,7 @@ const SignupModal = (props) => {
   return (
 
     <div>
+      <form onSubmit={onSubmit}>
       <Dialog
         open={props.open}
         onClose={props.handleClose}
@@ -109,6 +118,8 @@ const SignupModal = (props) => {
                 value={name}
                 onChange={inputName}
                 fullWidth
+                name="name"
+                inputRef={register({ required:"名前を入力してください" , maxLength: 10 })}
                 rows={1}/>
 
                 <TextField
@@ -137,11 +148,12 @@ const SignupModal = (props) => {
         </DialogContent>
         <p className={classes.toLogin} onClick={props.onClickLogin}>ログインはこちら</p>
         <DialogActions>
-          <Button onClick={onSubmit} className={classes.signUpButton}>
+          <Button type="submit" className={classes.signUpButton}>
             登録
           </Button>
         </DialogActions>
       </Dialog>
+      </form>
     </div>
   );
 }

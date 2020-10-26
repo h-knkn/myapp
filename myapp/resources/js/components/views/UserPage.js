@@ -9,9 +9,22 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 
 
+const useStyles = makeStyles((theme) => ({
+    logoutButton: {
+      margin: 'auto',
+      backgroundColor: '#FFCC66',
+      '&:hover': {
+        background: "#FFCC66",
+        opacity: 0.6,
+     },
+    },
+}));
+
+
 
 const UserPage = (props) => {
 
+  const classes = useStyles();
   
   const [userData, setUserData] = useState([]);
   
@@ -26,15 +39,29 @@ const UserPage = (props) => {
               console.log(res.data);
               setUserData(res.data);
             })
-            .catch(err => {
-              console.log(err)
-            })
   }, []);
+
+  const logoutButton = (e) => {
+    e.preventDefault()
+    const data = localStorage.getItem('access_token');
+    console.log(data);
+    const res = confirm("ログアウトしますか？");
+    if( res == true ) {
+      localStorage.clear();
+      props.history.push('/');
+    }
+    else {
+      return;
+    }
+  }
 
 
 
   return (
   <div>
+    <Button className={classes.logoutButton} onClick={logoutButton}>
+      ログアウト
+    </Button>
     <div>こんにちは{userData.name}さん</div> 
     <div>あなたのメールアドレスは{userData.email}です</div> 
   </div>

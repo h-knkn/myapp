@@ -8,7 +8,6 @@ import {
     Redirect
   } from 'react-router-dom'
   import Routes from './Routes';
-  import history from './createBrowserHistory';
   
 
   const App = () => {

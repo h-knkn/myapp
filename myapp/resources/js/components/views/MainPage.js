@@ -8,15 +8,15 @@ import {SignupModal,Top, LoginModal, UserPage} from './index';
     const [openLogin, setOpenLogin] = useState(false);
     const [openSignup, setOpenSignup] = useState(false);
     
-    const handleClickOpen = () => {
-      setOpenLogin(true);
-      setOpenSignup(true);
-    };
+    // const handleClickOpen = () => {
+    //   setOpenLogin(true);
+    //   setOpenSignup(true);
+    // };
   
-    const handleClose = () => {
-      setOpenLogin(false);
-      setOpenSignup(false);
-    };
+    // const handleClose = () => {
+    //   setOpenLogin(false);
+    //   setOpenSignup(false);
+    // };
 
 
     return (
