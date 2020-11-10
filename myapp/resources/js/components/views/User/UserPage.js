@@ -7,12 +7,20 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
+import PhotoButton from './PhotoButton';
 
 
 const useStyles = makeStyles((theme) => ({
+    main: {
+      padding: '50px 5%',
+      backgroundColor: '#FFE4E1',
+    },
     logoutButton: {
       margin: 'auto',
       backgroundColor: '#FFCC66',
+      width: '10%',
+      display:'block',
+      margin: '0 0 0 auto',
       '&:hover': {
         background: "#FFCC66",
         opacity: 0.6,
@@ -58,12 +66,13 @@ const UserPage = (props) => {
 
 
   return (
-  <div>
+  <div className={classes.main}>
     <Button className={classes.logoutButton} onClick={logoutButton}>
       ログアウト
     </Button>
     <div>こんにちは{userData.name}さん</div> 
     <div>あなたのメールアドレスは{userData.email}です</div> 
+    <PhotoButton />
   </div>
     
   );

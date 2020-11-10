@@ -6,9 +6,9 @@ import {
     Link,
     Redirect
 } from 'react-router-dom';
+import UserPage from './views/User/UserPage';
 import {
-     MainPage,
-     UserPage
+     MainPage
 
 } from "./views";
 
