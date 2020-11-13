@@ -1,6 +1,6 @@
 import React , {useState, useEffect} from 'react';
 import {SignupModal,Top, LoginModal} from './index';
-import UserPage from './User/UserPage';
+import UserPage from './User/Home/UserPage';
   
   
 

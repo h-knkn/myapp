@@ -1,9 +1,7 @@
 import React , {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Button';
-import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
-import firebase, { storage } from "../../../../../firebase/firebase";
+import firebase, { storage } from "../../../../../../firebase/firebase";
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
@@ -145,7 +143,6 @@ const PhotoButton = () => {
             alert("削除エラー");
         });
     }
-
     
 
     return(
@@ -165,14 +162,10 @@ const PhotoButton = () => {
                     <img key={'unique_key_string' + index} src={file} />
                 ))}
             </Slider>
-
     
         </div>
     );
-
 }
-
-
 
 export default PhotoButton
 
