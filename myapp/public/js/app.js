@@ -9404,6 +9404,81 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/core/esm/DialogContentText/DialogContentText.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/DialogContentText/DialogContentText.js ***!
+  \***********************************************************************************/
+/*! exports provided: styles, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "styles", function() { return styles; });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
+/* harmony import */ var _Typography__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Typography */ "./node_modules/@material-ui/core/esm/Typography/index.js");
+
+
+
+
+
+var styles = {
+  /* Styles applied to the root element. */
+  root: {
+    marginBottom: 12
+  }
+};
+var DialogContentText = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["forwardRef"](function DialogContentText(props, ref) {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__["createElement"](_Typography__WEBPACK_IMPORTED_MODULE_4__["default"], Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+    component: "p",
+    variant: "body1",
+    color: "textSecondary",
+    ref: ref
+  }, props));
+});
+ true ? DialogContentText.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The content of the component.
+   */
+  children: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.node,
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object
+} : undefined;
+/* harmony default export */ __webpack_exports__["default"] = (Object(_styles_withStyles__WEBPACK_IMPORTED_MODULE_3__["default"])(styles, {
+  name: 'MuiDialogContentText'
+})(DialogContentText));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/DialogContentText/index.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/DialogContentText/index.js ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _DialogContentText__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DialogContentText */ "./node_modules/@material-ui/core/esm/DialogContentText/DialogContentText.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "default", function() { return _DialogContentText__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+
+
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/core/esm/DialogTitle/DialogTitle.js":
 /*!***********************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/DialogTitle/DialogTitle.js ***!
@@ -110719,10 +110794,12 @@ var MenuModal = function MenuModal() {
 
   var handleToUserHome = function handleToUserHome() {
     history.push('/userprofile');
+    handleClose();
   };
 
   var handleToMyBabyPage = function handleToMyBabyPage() {
     history.push('/babyprofile');
+    handleClose();
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -111147,16 +111224,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core/Button */ "./node_modules/@material-ui/core/esm/Button/index.js");
 /* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
 /* harmony import */ var _material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/TextField */ "./node_modules/@material-ui/core/esm/TextField/index.js");
-/* harmony import */ var _firebase_firebase__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../../firebase/firebase */ "./firebase/firebase.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _User_Home_MenuModal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../User/Home/MenuModal */ "./resources/js/components/views/User/Home/MenuModal.js");
-/* harmony import */ var _public_img_star_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../../public/img/star.png */ "./public/img/star.png");
-/* harmony import */ var _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_public_img_star_png__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _public_img_boy_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../../public/img/boy.png */ "./public/img/boy.png");
-/* harmony import */ var _public_img_boy_png__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_public_img_boy_png__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _public_img_girl_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../../public/img/girl.png */ "./public/img/girl.png");
-/* harmony import */ var _public_img_girl_png__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_public_img_girl_png__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _material_ui_core_Dialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/Dialog */ "./node_modules/@material-ui/core/esm/Dialog/index.js");
+/* harmony import */ var _material_ui_core_DialogActions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/DialogActions */ "./node_modules/@material-ui/core/esm/DialogActions/index.js");
+/* harmony import */ var _material_ui_core_DialogContent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/DialogContent */ "./node_modules/@material-ui/core/esm/DialogContent/index.js");
+/* harmony import */ var _material_ui_core_DialogContentText__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/DialogContentText */ "./node_modules/@material-ui/core/esm/DialogContentText/index.js");
+/* harmony import */ var _material_ui_core_DialogTitle__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/DialogTitle */ "./node_modules/@material-ui/core/esm/DialogTitle/index.js");
+/* harmony import */ var _firebase_firebase__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../../firebase/firebase */ "./firebase/firebase.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _User_Home_MenuModal__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../User/Home/MenuModal */ "./resources/js/components/views/User/Home/MenuModal.js");
+/* harmony import */ var _public_img_star_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../../../../public/img/star.png */ "./public/img/star.png");
+/* harmony import */ var _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_public_img_star_png__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _public_img_boy_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../../../../public/img/boy.png */ "./public/img/boy.png");
+/* harmony import */ var _public_img_boy_png__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_public_img_boy_png__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _public_img_girl_png__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../../../../public/img/girl.png */ "./public/img/girl.png");
+/* harmony import */ var _public_img_girl_png__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_public_img_girl_png__WEBPACK_IMPORTED_MODULE_15__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -111176,6 +111258,11 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
 
 
 
@@ -111218,9 +111305,17 @@ var useStyles = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__["ma
       display: 'flex',
       alignItems: 'flex-start'
     },
+    displayFlexUpdate: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      marginTop: '30px'
+    },
     star: {
       margin: '0',
       marginRight: '10px'
+    },
+    changeColor: {
+      backgroundColor: 'black'
     }
   };
 });
@@ -111228,35 +111323,48 @@ var useStyles = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__["ma
 var MyBaby = function MyBaby(props) {
   var classes = useStyles(); // Babyinfo入力
 
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false),
       _useState2 = _slicedToArray(_useState, 2),
-      userData = _useState2[0],
-      setUserData = _useState2[1];
+      open = _useState2[0],
+      setOpen = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
       _useState4 = _slicedToArray(_useState3, 2),
-      name = _useState4[0],
-      setName = _useState4[1];
+      userData = _useState4[0],
+      setUserData = _useState4[1];
 
   var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
       _useState6 = _slicedToArray(_useState5, 2),
-      birth = _useState6[0],
-      setBirth = _useState6[1];
+      name = _useState6[0],
+      setName = _useState6[1];
 
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
       _useState8 = _slicedToArray(_useState7, 2),
-      gender = _useState8[0],
-      setGender = _useState8[1];
+      birth = _useState8[0],
+      setBirth = _useState8[1];
 
   var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
       _useState10 = _slicedToArray(_useState9, 2),
-      averagetemperature = _useState10[0],
-      setAverageTemperature = _useState10[1];
+      gender = _useState10[0],
+      setGender = _useState10[1];
 
   var _useState11 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
       _useState12 = _slicedToArray(_useState11, 2),
-      memo = _useState12[0],
-      setMemo = _useState12[1];
+      averagetemperature = _useState12[0],
+      setAverageTemperature = _useState12[1];
+
+  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
+      _useState14 = _slicedToArray(_useState13, 2),
+      memo = _useState14[0],
+      setMemo = _useState14[1];
+
+  var handleClickOpen = function handleClickOpen() {
+    setOpen(true);
+  };
+
+  var handleClose = function handleClose() {
+    setOpen(false);
+  };
 
   var inputName = Object(react__WEBPACK_IMPORTED_MODULE_1__["useCallback"])(function (event) {
     setName(event.target.value);
@@ -111289,7 +111397,7 @@ var MyBaby = function MyBaby(props) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_6___default.a.get('api/babyinfo');
+                return axios__WEBPACK_IMPORTED_MODULE_11___default.a.get('api/babyinfo');
 
               case 2:
                 response = _context.sent;
@@ -111314,7 +111422,7 @@ var MyBaby = function MyBaby(props) {
   console.log(userData);
 
   var addInfo = function addInfo(newInfo) {
-    return axios__WEBPACK_IMPORTED_MODULE_6___default.a.post('api/babyinfo', newInfo, {
+    return axios__WEBPACK_IMPORTED_MODULE_11___default.a.post('api/babyinfo', newInfo, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -111335,22 +111443,40 @@ var MyBaby = function MyBaby(props) {
       memo: memo
     };
     addInfo(newInfo).then(function (res) {
-      alert("登録しました。");
+      alert("登録しました");
     });
+  }; // 更新
+
+
+  var updateInfo = function updateInfo() {
+    var upInfo = {
+      name: name,
+      birth: birth,
+      gender: gender,
+      average_temperature: averagetemperature,
+      memo: memo
+    };
+    axios__WEBPACK_IMPORTED_MODULE_11___default.a.put('api/babyinfo/1', upInfo).then(function (res) {
+      console.log("成功！");
+    })["catch"](function (err) {
+      alert("更新に失敗しました");
+    });
+    handleClose();
+    location.reload();
   }; // Firebase画像アップロード
 
 
-  var storageRef = _firebase_firebase__WEBPACK_IMPORTED_MODULE_5__["default"].storage().ref();
+  var storageRef = _firebase_firebase__WEBPACK_IMPORTED_MODULE_10__["default"].storage().ref();
 
-  var _useState13 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
-      _useState14 = _slicedToArray(_useState13, 2),
-      image = _useState14[0],
-      setImage = _useState14[1];
-
-  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+  var _useState15 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(""),
       _useState16 = _slicedToArray(_useState15, 2),
-      files = _useState16[0],
-      setFiles = _useState16[1]; // const [imageUrl, setImageUrl] = useState("");
+      image = _useState16[0],
+      setImage = _useState16[1];
+
+  var _useState17 = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])([]),
+      _useState18 = _slicedToArray(_useState17, 2),
+      files = _useState18[0],
+      setFiles = _useState18[1]; // const [imageUrl, setImageUrl] = useState("");
 
 
   var handleImage = function handleImage(event) {
@@ -111367,8 +111493,8 @@ var MyBaby = function MyBaby(props) {
     } // アップロード処理
 
 
-    var uploadTask = _firebase_firebase__WEBPACK_IMPORTED_MODULE_5__["storage"].ref("/profile/".concat(image.name)).put(image);
-    uploadTask.on(_firebase_firebase__WEBPACK_IMPORTED_MODULE_5__["default"].storage.TaskEvent.STATE_CHANGED, next, error, complete);
+    var uploadTask = _firebase_firebase__WEBPACK_IMPORTED_MODULE_10__["storage"].ref("/profile/".concat(image.name)).put(image);
+    uploadTask.on(_firebase_firebase__WEBPACK_IMPORTED_MODULE_10__["default"].storage.TaskEvent.STATE_CHANGED, next, error, complete);
     alert("アップロードしました");
   };
 
@@ -111387,7 +111513,7 @@ var MyBaby = function MyBaby(props) {
   var complete = function complete() {
     // 完了後の処理
     // 画像表示のため、アップロードした画像のURLを取得
-    _firebase_firebase__WEBPACK_IMPORTED_MODULE_5__["storage"].ref("profile").child(image.name).getDownloadURL().then(function (fireBaseUrl) {
+    _firebase_firebase__WEBPACK_IMPORTED_MODULE_10__["storage"].ref("profile").child(image.name).getDownloadURL().then(function (fireBaseUrl) {
       setImageUrl(fireBaseUrl);
       location.reload();
     });
@@ -111473,12 +111599,12 @@ var MyBaby = function MyBaby(props) {
     className: "text1"
   }, "My Baby"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: classes.displayFlex
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_User_Home_MenuModal__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_User_Home_MenuModal__WEBPACK_IMPORTED_MODULE_12__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
     className: classes.logoutButton,
     onClick: logoutButton
   }, "\u30ED\u30B0\u30A2\u30A6\u30C8")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "contents"
-  }, name ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+  }, !userData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: "info-box"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
     className: classes.root,
@@ -111489,7 +111615,7 @@ var MyBaby = function MyBaby(props) {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_4__["default"], {
     id: "outlined-basic",
     label: "\u540D\u524D",
@@ -111500,7 +111626,7 @@ var MyBaby = function MyBaby(props) {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_4__["default"], {
     id: "outlined-basic",
     label: "\u751F\u5E74\u6708\u65E5",
@@ -111511,22 +111637,22 @@ var MyBaby = function MyBaby(props) {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
     className: "mybaby_ul"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
     onClick: selectBoy
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
-    src: _public_img_boy_png__WEBPACK_IMPORTED_MODULE_9___default.a
+    src: _public_img_boy_png__WEBPACK_IMPORTED_MODULE_14___default.a
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
     onClick: selectGirl
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
-    src: _public_img_girl_png__WEBPACK_IMPORTED_MODULE_10___default.a
+    src: _public_img_girl_png__WEBPACK_IMPORTED_MODULE_15___default.a
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_4__["default"], {
     id: "outlined-basic",
     label: "\u5E73\u71B1",
@@ -111537,7 +111663,7 @@ var MyBaby = function MyBaby(props) {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_4__["default"], {
     id: "outlined-basic",
     label: "\u30E1\u30E2",
@@ -111551,31 +111677,85 @@ var MyBaby = function MyBaby(props) {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, userData.name)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, userData.birth)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, userData.gender)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
+  }), userData.gender === "0" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+    src: _public_img_boy_png__WEBPACK_IMPORTED_MODULE_14___default.a
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+    src: _public_img_girl_png__WEBPACK_IMPORTED_MODULE_15___default.a
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, userData.average_temperature)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
     className: classes.displayFlex
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     className: classes.star,
-    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_8___default.a
+    src: _public_img_star_png__WEBPACK_IMPORTED_MODULE_13___default.a
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("p", null, userData.memo)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    type: "submit",
-    className: classes.upLoadButton
-  }, "\u7DE8\u96C6")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+    className: classes.upLoadButton,
+    onClick: handleClickOpen
+  }, "\u7DE8\u96C6"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_Dialog__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    open: open,
+    onClose: handleClose,
+    "aria-labelledby": "form-dialog-title"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_DialogContent__WEBPACK_IMPORTED_MODULE_7__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    autoFocus: true,
+    margin: "dense",
+    label: userData.name,
+    value: name,
+    onChange: inputName,
+    fullWidth: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    autoFocus: true,
+    margin: "dense",
+    label: userData.birth,
+    value: birth,
+    onChange: inputBirth,
+    fullWidth: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    className: classes.displayFlexUpdate
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", {
+    className: "mybaby_ul"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+    onClick: selectBoy
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+    src: _public_img_boy_png__WEBPACK_IMPORTED_MODULE_14___default.a
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("li", {
+    onClick: selectGirl
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
+    src: _public_img_girl_png__WEBPACK_IMPORTED_MODULE_15___default.a
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    autoFocus: true,
+    margin: "dense",
+    label: userData.average_temperature,
+    value: averagetemperature,
+    onChange: inputAverageTemperature,
+    fullWidth: true
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_TextField__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    autoFocus: true,
+    margin: "dense",
+    label: userData.memo,
+    value: memo,
+    onChange: inputMemo,
+    fullWidth: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_DialogActions__WEBPACK_IMPORTED_MODULE_6__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onClick: handleClose,
+    color: "primary"
+  }, "\u30AD\u30E3\u30F3\u30BB\u30EB"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    onClick: updateInfo,
+    color: "primary"
+  }, "\u767B\u9332")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("img", {
     src: files
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("form", {
     onSubmit: onSubmit

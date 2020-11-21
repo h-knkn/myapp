@@ -48,9 +48,11 @@ const MenuModal = () => {
 
   const handleToUserHome = () => {
     history.push('/userprofile');
+    handleClose();
   };
   const handleToMyBabyPage = () => {
     history.push('/babyprofile');
+    handleClose();
   };
 
 

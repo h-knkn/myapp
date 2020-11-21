@@ -2,6 +2,11 @@ import React , {useState, useEffect, useCallback} from 'react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase, { storage } from "../../../../../../firebase/firebase";
 import axios from "axios";
 import MenuModal from '../../User/Home/MenuModal';
@@ -42,9 +47,18 @@ const useStyles = makeStyles((theme) => ({
       alignItems:'flex-start',
       
     },
+    displayFlexUpdate: {
+      display:'flex',
+      alignItems:'flex-start',
+      marginTop:'30px',
+      
+    },
     star: {
       margin:'0',
       marginRight:'10px',
+    },
+    changeColor: {
+      backgroundColor: 'black',
     },
 }));
 
@@ -53,12 +67,21 @@ const MyBaby = (props) => {
   const classes = useStyles();
 
   // Babyinfo入力
+  const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState([]);
   const [name , setName] = useState("");
   const [birth , setBirth] = useState("");
   const [gender , setGender] = useState("");
   const [averagetemperature , setAverageTemperature] = useState("");
   const [memo , setMemo] = useState("");
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const inputName = useCallback((event) => {
     setName(event.target.value);
@@ -121,9 +144,30 @@ const MyBaby = (props) => {
       memo: memo,
     }
     addInfo(newInfo).then(res=>{
-      alert("登録しました。");
+      alert("登録しました");
     })
   }
+
+  // 更新
+  const updateInfo = () => {
+    const upInfo = {
+      name: name,
+      birth: birth,
+      gender: gender,
+      average_temperature: averagetemperature,
+      memo: memo,
+    }
+    axios
+      .put('api/babyinfo/1', upInfo)
+      .then(res => {
+        console.log("成功！");
+      })
+      .catch(err => {
+        alert("更新に失敗しました");
+      });
+      handleClose();
+      location.reload();
+  };
 
 
   // Firebase画像アップロード
@@ -221,7 +265,7 @@ const MyBaby = (props) => {
       </Button>
     </div>
     <div className="contents">
-    {name ? (
+    {!userData ? (
       <div className="info-box">
         <form className={classes.root} noValidate autoComplete="off" onSubmit={onInfoSubmit}>
           <div className={classes.displayFlex}>
@@ -246,7 +290,7 @@ const MyBaby = (props) => {
             <img className={classes.star} src={star}/>
             <ul className="mybaby_ul">
               <li onClick={selectBoy} ><img src={boy}/></li>
-              <li onClick={selectGirl} ><img src={girl}/></li>
+              <li onClick={selectGirl}><img src={girl}/></li>
             </ul>
           </div>
           <div className={classes.displayFlex}>
@@ -281,7 +325,11 @@ const MyBaby = (props) => {
         </div>
         <div className={classes.displayFlex}>
           <img className={classes.star} src={star}/>
-          <p>{userData.gender}</p>
+          {userData.gender ==="0" ? (
+                    <p><img src={boy}/></p>
+                ) : (
+                  <p><img src={girl}/></p>
+          )}
         </div>
         <div className={classes.displayFlex}>
           <img className={classes.star} src={star}/>
@@ -291,7 +339,61 @@ const MyBaby = (props) => {
           <img className={classes.star} src={star}/>
           <p>{userData.memo}</p>
         </div>
-        <Button type="submit" className={classes.upLoadButton}>編集</Button>
+        <Button className={classes.upLoadButton} onClick={handleClickOpen}>編集</Button>
+
+        {/* 編集画面モーダル */}
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+          <DialogContent>
+
+          <TextField
+              autoFocus
+              margin="dense"
+              label={userData.name}
+              value={name}
+              onChange={inputName}
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              label={userData.birth}
+              value={birth}
+              onChange={inputBirth}
+              fullWidth
+            />
+            <div className={classes.displayFlexUpdate}>
+              <ul className="mybaby_ul">
+                <li onClick={selectBoy}><img src={boy}/></li>
+                <li onClick={selectGirl}><img src={girl}/></li>
+              </ul>
+            </div>
+            <TextField
+              autoFocus
+              margin="dense"
+              label={userData.average_temperature}
+              value={averagetemperature}
+              onChange={inputAverageTemperature} 
+              fullWidth
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              label={userData.memo}
+              value={memo}
+              onChange={inputMemo}
+              fullWidth
+            />
+            
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              キャンセル
+            </Button>
+            <Button onClick={updateInfo} color="primary">
+              登録
+            </Button>
+          </DialogActions>
+        </Dialog>
         </div>
       )}  
         
@@ -306,8 +408,7 @@ const MyBaby = (props) => {
   </div>
   </div>
     
-  );
-  
+  ); 
 }
   
 export default MyBaby
