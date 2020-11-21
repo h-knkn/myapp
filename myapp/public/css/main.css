@@ -150,13 +150,10 @@ body {
     background: -webkit-linear-gradient(top, #FFC0CB, #FFF);
     background: linear-gradient(to bottom, #FFC0CB, #FFF);
 }
-.MuiInputBase-input {
+/* .MuiInputBase-input {
     height: 5px!important;
-}
-.MuiInputBase-root  {
-    /* font-size: 10px!important; */
-    line-height: 0!important;
-}
+} */
+
 .mybaby_ul {
     display: flex;
     padding: 0;
@@ -184,4 +181,8 @@ body {
 .mybaby_ul li:nth-child(2){
     list-style: none;
     background-color: #FFC0CB;
+}
+.contents {
+    display: flex;
+    justify-content: space-around;
 }

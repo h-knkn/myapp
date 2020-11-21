@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+// Auth
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('logout', 'JWTAuthController@logout')->name('api.jwt.logout');
     Route::post('refresh', 'JWTAuthController@refresh');
@@ -34,3 +34,6 @@ Route::group(['middleware' => 'auth:api'], function(){
 
 Route::post('register', 'JWTAuthController@register')->name('api.jwt.register');
 Route::post('login', 'JWTAuthController@login')->name('api.jwt.login');
+
+// Babyinfo
+Route::apiResource('babyinfo', 'BabyInfoController');

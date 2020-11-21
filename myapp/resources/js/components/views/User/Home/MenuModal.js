@@ -46,6 +46,9 @@ const MenuModal = () => {
     setOpen(false);
   };
 
+  const handleToUserHome = () => {
+    history.push('/userprofile');
+  };
   const handleToMyBabyPage = () => {
     history.push('/babyprofile');
   };
@@ -65,6 +68,10 @@ const MenuModal = () => {
           </Toolbar>
         </AppBar>
         <List>
+          <ListItem button onClick={handleToUserHome}>
+            <ListItemText primary="ホーム"/>
+          </ListItem>
+
           <ListItem button onClick={handleToMyBabyPage}>
             <ListItemText primary="My Baby"/>
           </ListItem>

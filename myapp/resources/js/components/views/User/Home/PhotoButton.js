@@ -85,7 +85,8 @@ const PhotoButton = () => {
           .getDownloadURL()
           .then(fireBaseUrl => {
           setImageUrl(fireBaseUrl);
-          });
+          location.reload();
+        });
     };
 
     useEffect(() => {
@@ -154,7 +155,7 @@ const PhotoButton = () => {
                 <Button type="submit" className={classes.PhotoButton}>登録</Button>
             </form>
             </div>
-            <img src={imageUrl} />
+            {/* <img src={imageUrl} /> */}
             <Button className={classes.PhotoButton} onClick={deletePhtot}>削除</Button>
 
             <Slider {...settings}>            
