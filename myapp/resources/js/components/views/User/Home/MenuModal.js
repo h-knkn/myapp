@@ -15,6 +15,7 @@ import baby_icon from '../../../../../../public/img/baby_icon.png';
 import PropTypes from 'prop-types' ;
 import { withRouter } from 'react-router';
 import MyBaby from '../MyBaby/MyBaby';
+import FirstMemory from '../FirstMemory/FirstMemory';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -54,6 +55,10 @@ const MenuModal = () => {
     history.push('/babyprofile');
     handleClose();
   };
+  const handleToFirstMemory = () => {
+    history.push('/firstmemory');
+    handleClose();
+  };
 
 
   return (
@@ -82,7 +87,7 @@ const MenuModal = () => {
             <ListItemText primary="カレンダー" />
           </ListItem>
      
-          <ListItem button>
+          <ListItem button onClick={handleToFirstMemory}>
             <ListItemText primary="はじめてを記録" />
           </ListItem>
    

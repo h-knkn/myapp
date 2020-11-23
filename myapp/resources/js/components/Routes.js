@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom';
 import UserPage from './views/User/Home/UserPage';
 import MyBaby from './views/User/MyBaby/MyBaby';
+import FirstMemory from './views/User/FirstMemory/FirstMemory';
 import {
      MainPage
 
@@ -23,6 +24,7 @@ const Routes = () => {
         
           <Route path="/userprofile" exact component={UserPage}/>
           <Route path="/babyprofile" exact component={MyBaby}/>
+          <Route path="/firstmemory" exact component={FirstMemory}/>
  
            {/* <PrivateRoute path='/userprofile' exact component={UserPage}/> */}
         </Switch>

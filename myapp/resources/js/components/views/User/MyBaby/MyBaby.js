@@ -5,8 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import firebase, { storage } from "../../../../../../firebase/firebase";
 import axios from "axios";
 import MenuModal from '../../User/Home/MenuModal';
@@ -346,7 +344,6 @@ const MyBaby = (props) => {
           <DialogContent>
 
           <TextField
-              autoFocus
               margin="dense"
               label={userData.name}
               value={name}
@@ -354,7 +351,6 @@ const MyBaby = (props) => {
               fullWidth
             />
             <TextField
-              autoFocus
               margin="dense"
               label={userData.birth}
               value={birth}
@@ -368,7 +364,6 @@ const MyBaby = (props) => {
               </ul>
             </div>
             <TextField
-              autoFocus
               margin="dense"
               label={userData.average_temperature}
               value={averagetemperature}
@@ -376,7 +371,6 @@ const MyBaby = (props) => {
               fullWidth
             />
             <TextField
-              autoFocus
               margin="dense"
               label={userData.memo}
               value={memo}
