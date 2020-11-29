@@ -39,3 +39,5 @@ Route::post('login', 'JWTAuthController@login')->name('api.jwt.login');
 Route::apiResource('babyinfo', 'BabyInfoController');
 // FirstMemory
 Route::apiResource('firstmemory', 'FirstMemoryController');
+// Share
+Route::apiResource('/share', 'ShareController');

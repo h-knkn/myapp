@@ -116,6 +116,20 @@ const FirstMemoryData = (props) => {
         handleClose();
         location.reload();
     };
+
+    // 削除
+    const deleteInfo = ()=> {
+        axios
+        .delete(`api/firstmemory/${detailId}`)
+        .then(res => {
+            console.log("削除しました");
+        })
+        .catch(err => {
+            alert("削除できませんでした");
+        });
+        handleClose();
+        location.reload();
+    }
        
     return(
     <>
@@ -183,9 +197,14 @@ const FirstMemoryData = (props) => {
         </DialogContent>
         <DialogActions>
         {!show ?
-          <Button onClick={showEdit} color="primary">
-            編集
-          </Button>:
+          <>
+            <Button onClick={showEdit} color="primary">
+                編集
+            </Button>
+            <Button onClick={deleteInfo} color="primary">
+                削除する
+            </Button>
+          </>:
           <>
             <Button onClick={goBack} color="primary">
                 もどる

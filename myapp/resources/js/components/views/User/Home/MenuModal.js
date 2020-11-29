@@ -12,7 +12,6 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import baby_icon from '../../../../../../public/img/baby_icon.png';
-import PropTypes from 'prop-types' ;
 import { withRouter } from 'react-router';
 import MyBaby from '../MyBaby/MyBaby';
 import FirstMemory from '../FirstMemory/FirstMemory';
@@ -59,6 +58,10 @@ const MenuModal = () => {
     history.push('/firstmemory');
     handleClose();
   };
+  const handleToShareInfo = () => {
+    history.push('/share');
+    handleClose();
+  };
 
 
   return (
@@ -91,7 +94,7 @@ const MenuModal = () => {
             <ListItemText primary="はじめてを記録" />
           </ListItem>
    
-          <ListItem button>
+          <ListItem button  onClick={handleToShareInfo}>
             <ListItemText primary="共有事項" />
           </ListItem>
         </List>

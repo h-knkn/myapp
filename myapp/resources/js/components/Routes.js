@@ -9,6 +9,7 @@ import {
 import UserPage from './views/User/Home/UserPage';
 import MyBaby from './views/User/MyBaby/MyBaby';
 import FirstMemory from './views/User/FirstMemory/FirstMemory';
+import ShareInfo from './views/User/ShareInfo/ShareInfo';
 import {
      MainPage
 
@@ -25,6 +26,7 @@ const Routes = () => {
           <Route path="/userprofile" exact component={UserPage}/>
           <Route path="/babyprofile" exact component={MyBaby}/>
           <Route path="/firstmemory" exact component={FirstMemory}/>
+          <Route path="/share" exact component={ShareInfo}/>
         
  
            {/* <PrivateRoute path='/userprofile' exact component={UserPage}/> */}
