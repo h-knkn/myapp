@@ -25,6 +25,7 @@ const Routes = () => {
           <Route path="/userprofile" exact component={UserPage}/>
           <Route path="/babyprofile" exact component={MyBaby}/>
           <Route path="/firstmemory" exact component={FirstMemory}/>
+        
  
            {/* <PrivateRoute path='/userprofile' exact component={UserPage}/> */}
         </Switch>

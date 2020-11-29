@@ -189,9 +189,11 @@ body {
 
 /* FirstMemory */
 .firstcontents {
-    background-color: #FFFFCC;
+    padding: 20px;
 }
-/* 
-.MuiDialog-paperScrollPaper {
-    height: 495px!important;
-} */
+.nondata {
+    padding: 20px;
+}
+.nondata p{
+   text-align: center;
+}

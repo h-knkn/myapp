@@ -7,6 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuModal from '../../User/Home/MenuModal';
+import FirstMemoryData from './FirstMemoryData';
 import axios from "axios";
 
 import DatePicker from "react-datepicker"
@@ -77,13 +78,12 @@ const FirstMemory = () => {
     const [open, setOpen] = React.useState(false);
     const [startDate, setStartDate] = useState(new Date());
 
-
     // はじめて情報入力
     const [userData, setUserData] = useState([]);
     const [first , setFirst] = useState("");
     const [memo , setMemo] = useState("");
     const [change , setChange] = useState("");
-    
+
 
     // newDateをyyyy-mm-dd形式に変える
     const handleChange = (date) => {
@@ -106,14 +106,18 @@ const FirstMemory = () => {
         setMemo(event.target.value)
     },[setMemo]);
 
+
+    // 追加
     const addFirstInfo = newFirstInfo => {
         return axios
         .post('api/firstmemory', newFirstInfo, {
            headers: {'Content-Type': 'application/json'}
         })
         .then(res => {
-           console.log(res.data);
-          
+            setFirst("");
+            setChange(new Date());
+            setMemo("");
+            return handleClose();
         })
         .catch(err => {
            console.log(err)
@@ -128,10 +132,20 @@ const FirstMemory = () => {
         }
         addFirstInfo(newFirstInfo).then(res=>{
           alert("登録しました");
+          location.reload();
         })
     }
-
-
+    // 取得
+    useEffect(() => { 
+        axios
+        .get(`api/firstmemory`)
+          .then(res => {
+            setUserData(res.data.data);
+        })
+        .catch(err => {
+            alert(err);
+        });    
+    }, []);
 
     // ログアウト
     const logoutButton = (e) => {
@@ -147,11 +161,10 @@ const FirstMemory = () => {
         return;
         }
     }
-    
 
     return(
     <div>
-        <h1 className="text1">はじめてを記録しよう</h1>
+        <h1 className="text1">はじめて記録</h1>
         <div className={classes.displayFlex}>
         <MenuModal />
         <Button className={classes.logoutButton} onClick={logoutButton}>
@@ -159,49 +172,56 @@ const FirstMemory = () => {
         </Button>
         </div>
         <div className="firstcontents">
-        <Button onClick={handleClickOpen} className={classes.addButton}>
-        追加する
-      </Button>
-      {/* 追加モーダル */}
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" >
-        <DialogTitle id="form-dialog-title" className={classes.addModal}>はじめて</DialogTitle>
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={onFirstInfoSubmit}>
-        <DialogContent className={classes.dialog}>
-          <TextField
-           className={classes.TextField}
-            id="standard-basic"
-            margin="dense"
-            label="出来るようになったこと"
-            value={first}
-            onChange={inputFirst}
-            fullWidth
-          />
-          <TextField
-           className={classes.TextField}
-            id="standard-basic"
-            margin="dense"
-            label="メモ"
-            value={memo}
-            onChange={inputMemo}
-            fullWidth
-          />
-          <DatePicker 
-          selected={startDate}
-          onChange={handleChange}
-          value={change}
-          />
-        </DialogContent>
-        <DialogActions className={classes.displayRight}> 
-          <Button onClick={handleClose} color="primary" onClick={handleClose}　className={classes.cancelButton}>
+            <Button onClick={handleClickOpen} className={classes.addButton}>
+            追加する
+            </Button>
+            {/* 追加モーダル */}
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" >
+            <DialogTitle id="form-dialog-title" className={classes.addModal}>はじめて</DialogTitle>
+            <form className={classes.root} noValidate autoComplete="off" onSubmit={onFirstInfoSubmit}>
+            <DialogContent className={classes.dialog}>
+            <TextField
+            className={classes.TextField}
+                margin="dense"
+                label="出来るようになったこと"
+                value={first}
+                onChange={inputFirst}
+                fullWidth
+            />
+            <TextField
+            className={classes.TextField}
+                margin="dense"
+                label="メモ"
+                value={memo}
+                onChange={inputMemo}
+                fullWidth
+            />
+            <DatePicker 
+            selected={startDate}
+            placeholderText="日付"
+            onChange={handleChange}
+            value={change}
+            />
+            </DialogContent>
+            <DialogActions className={classes.displayRight}> 
+            <Button onClick={handleClose} color="primary" onClick={handleClose}　className={classes.cancelButton}>
             キャンセル
-          </Button>
-          <Button  type="submit" color="primary" className={classes.addButton}>
+            </Button>
+            <Button  type="submit" color="primary" className={classes.addButton}>
             登録
-          </Button>
-        </DialogActions>
-        </form>
-        </Dialog>
+            </Button>
+            </DialogActions>
+            </form>
+            </Dialog>
         </div>
+        {!userData ? (
+            <div className="nondata">
+                <p>はじめての記録を追加してみよう！</p>
+            </div>
+            ) : (
+            <FirstMemoryData userData={userData} setUserData={setUserData} startDate={startDate} 
+            first={first} setFirst={setFirst} memo={memo} setMemo={setMemo} change={change} setChange={setChange}/>
+        )}    
     </div>
     );
 
