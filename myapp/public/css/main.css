@@ -197,3 +197,54 @@ body {
 .nondata p{
    text-align: center;
 }
+.search-box {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* share */
+.info-box {
+    margin: 50px;
+}
+.allergies_ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    padding-left: 10px;
+}
+.allergies_ul li{
+    list-style: none;
+    padding: 0px;
+    width: 70px;
+    text-align: center;
+    cursor: pointer;
+}
+.allergies_ul li:hover{
+    opacity: 0.6;
+}
+.allergies_ul li img{
+    list-style: none;
+    padding: 10px;
+}
+.allergies_ul li:first-child{
+    list-style: none;
+    background-color: #DCC2FF;
+}
+.allergies_ul li:nth-child(2){
+    list-style: none;
+    background-color: #B1F9D0;
+    margin-right: 20px;
+}
+/* ShareInfoData */
+.under{
+    background: linear-gradient(transparent 70%, #ff99ab 70%);
+    margin-right: 10px;
+}
+.share-info-contents {
+    margin: 50px;
+}
+.change-color {
+    background-color:#000000!important;
+    opacity:0.8!important;
+}

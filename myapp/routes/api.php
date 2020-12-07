@@ -40,4 +40,4 @@ Route::apiResource('babyinfo', 'BabyInfoController');
 // FirstMemory
 Route::apiResource('firstmemory', 'FirstMemoryController');
 // Share
-Route::apiResource('/share', 'ShareController');
+Route::apiResource('share', 'ShareController');

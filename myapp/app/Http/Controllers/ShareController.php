@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Share;
 
 class ShareController extends Controller
 {
@@ -13,11 +14,11 @@ class ShareController extends Controller
      */
     public function index()
     {
-        $shares = Share::all();
+        $shares = Share::where('id',1)->first();
         return response()->json([
             'message' => 'ok',
             'data' => $shares
-        ], 200, [], JSON_UNESCAPED_UNICODE);
+        ], 200);
     }
 
     /**
@@ -67,9 +68,10 @@ class ShareController extends Controller
     {
         $update = [
             'allergies' => $request->allergies,
+            'allergies_name' => $request->allergies_name,
             'house_rules' => $request->house_rules,
             'kids_rules' => $request->kids_rules,
-            'request' => $request->request,
+            'request_to' => $request->request_to,
             'memo' => $request->memo,
         ];
         $shares = Share::where('id', $id)->update($update);

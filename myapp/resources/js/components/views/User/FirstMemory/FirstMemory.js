@@ -6,6 +6,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Input from '@material-ui/core/Input';
+
 import MenuModal from '../../User/Home/MenuModal';
 import FirstMemoryData from './FirstMemoryData';
 import axios from "axios";
@@ -14,8 +16,7 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
 import baby from '../../../../../../public/img/baby.png';
-
-
+import searchIcon from '../../../../../../public/img/search.png';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
       textAlign:'right',
     },
     addButton: {
+        marginRight:'30px',
         backgroundColor: '#FFCC66',
         color:'#333333',
         '&:hover': {
@@ -67,9 +69,14 @@ const useStyles = makeStyles((theme) => ({
           opacity: 0.6,
        },
     },
+    searchButton: {
+        marginLeft:'10px',
+        '&:hover': {
+            opacity: 0.6,
+         },
+    },
     
 }));
-
 
 const FirstMemory = () => {
 
@@ -83,6 +90,10 @@ const FirstMemory = () => {
     const [first , setFirst] = useState("");
     const [memo , setMemo] = useState("");
     const [change , setChange] = useState("");
+    const [initialItem , setInitialItem] = useState([]);
+    const [items , setItems] = useState([]);
+
+    console.log(initialItem);
 
 
     // newDateをyyyy-mm-dd形式に変える
@@ -135,17 +146,24 @@ const FirstMemory = () => {
           location.reload();
         })
     }
-    // 取得
+    // 全件取得
     useEffect(() => { 
-        axios
-        .get(`api/firstmemory`)
-          .then(res => {
-            setUserData(res.data.data);
-        })
-        .catch(err => {
-            alert(err);
-        });    
+      const getAll = async () => {
+        const response = await axios.get(`api/firstmemory`);
+          setUserData(response.data.data); 
+        }
+        getAll();
     }, []);
+
+    const filterList = (e) => {
+      const search = userData.first;
+      const updateList = search.filter((item) => {
+        return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
+      })
+      setItems({updateList});
+      console.log(items);
+    }
+
 
     // ログアウト
     const logoutButton = (e) => {
@@ -162,6 +180,9 @@ const FirstMemory = () => {
         }
     }
 
+    console.log(userData);
+
+
     return(
     <div>
         <h1 className="text1">はじめて記録</h1>
@@ -172,9 +193,22 @@ const FirstMemory = () => {
         </Button>
         </div>
         <div className="firstcontents">
-            <Button onClick={handleClickOpen} className={classes.addButton}>
-            追加する
-            </Button>
+            <div className="search-box">
+                <Button onClick={handleClickOpen} className={classes.addButton}>
+                追加する
+                </Button>
+                <form action="">
+                  <Input placeholder="検索" onChange={filterList}/>
+                  <img src={searchIcon} className={classes.searchButton}/>
+                </form>
+            </div>
+            <div>
+            {/* {items.map((item, index) => {
+              return (
+                <li key={index}>{item}</li>
+              )  
+             })} */}
+        </div>
             {/* 追加モーダル */}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" >
             <DialogTitle id="form-dialog-title" className={classes.addModal}>はじめて</DialogTitle>

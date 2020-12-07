@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import baby_icon from '../../../../../../public/img/baby_icon.png';
+import baby from '../../../../../../public/img/baby.png';
 import { withRouter } from 'react-router';
 import MyBaby from '../MyBaby/MyBaby';
 import FirstMemory from '../FirstMemory/FirstMemory';
@@ -67,7 +68,7 @@ const MenuModal = () => {
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        <img src={baby_icon}/>
+        <img src={baby}/>
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>

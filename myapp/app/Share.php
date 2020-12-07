@@ -9,9 +9,10 @@ class Share extends Model
     protected $table = 'shares';
     protected $fillable = [
         'allergies',
+        'allergies_name',
         'house_rules',
         'kids_rules',
-        'request',
+        'request_to',
         'memo',
     ];
 }

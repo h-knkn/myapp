@@ -83,7 +83,6 @@ const MyBaby = (props) => {
 
   const inputName = useCallback((event) => {
     setName(event.target.value);
-    console.log(setName);
   },[setName]);
 
   const inputBirth = useCallback((event) => {
@@ -116,8 +115,8 @@ const MyBaby = (props) => {
         setUserData(response.data.data);
       }
       getUser();
-    },[]);
-    console.log(userData);
+  },[]);
+  console.log(userData);
 
   const addInfo = newInfo => {
     return axios

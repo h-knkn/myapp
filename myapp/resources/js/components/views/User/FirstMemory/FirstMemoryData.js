@@ -43,7 +43,7 @@ const FirstMemoryData = (props) => {
 
     const history = useHistory();
 
-    const { userData, setUserData, startDate ,first , setFirst, memo, setMemo, change, setChange} = props;
+    const { userData, setUserData, allergies ,first , setFirst, memo, setMemo, change, setChange} = props;
 
     const [open, setOpen] = useState(false);
     const [detail, setDetail] = useState("");
@@ -86,7 +86,7 @@ const FirstMemoryData = (props) => {
         }
         getDetails();
     }
-    
+  
 
     // 編集画面へ
     const showEdit = () => {

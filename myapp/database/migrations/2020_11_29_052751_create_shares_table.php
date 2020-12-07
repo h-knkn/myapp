@@ -16,9 +16,10 @@ class CreateSharesTable extends Migration
         Schema::create('shares', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('allergies');
+            $table->string('allergies_name',30)->nullable();
             $table->string('house_rules',500);
             $table->string('kids_rules',500);
-            $table->string('request', 500);
+            $table->string('request_to', 500);
             $table->string('memo', 500);
             $table->timestamps();
         });
