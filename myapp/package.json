@@ -26,8 +26,14 @@
         "sass-loader": "^8.0.0"
     },
     "dependencies": {
+        "@fullcalendar/core": "^5.4.0",
+        "@fullcalendar/daygrid": "^5.4.0",
+        "@fullcalendar/interaction": "^5.4.0",
+        "@fullcalendar/react": "^5.4.0",
+        "@fullcalendar/timegrid": "^5.4.0",
         "@material-ui/core": "^4.11.0",
         "@material-ui/icons": "^4.9.1",
+        "dayjs": "^1.9.7",
         "firebase": "^8.0.0",
         "material-ui-icons": "^1.0.0-beta.36",
         "node-fetch": "^3.0.0-beta.9",
@@ -38,6 +44,7 @@
         "react-router-dom": "^5.2.0",
         "react-slick": "^0.27.13",
         "redux": "^4.0.5",
+        "redux-thunk": "^2.3.0",
         "slick-carousel": "^1.8.1",
         "use-state-if-mounted": "^1.0.4",
         "with-router": "^1.0.1"

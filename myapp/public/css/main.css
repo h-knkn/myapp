@@ -248,3 +248,9 @@ body {
     background-color:#000000!important;
     opacity:0.8!important;
 }
+
+/* Calendar */
+.calendar-container {
+    max-width: 80%;
+    margin: 0 auto;
+}

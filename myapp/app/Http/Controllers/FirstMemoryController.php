@@ -94,7 +94,7 @@ class FirstMemoryController extends Controller
         $first_meomories = FirstMemory::where('id', $id)->delete();
         if ($first_meomories) {
             return response()->json([
-                'message' => ' deleted successfully',
+                'message' => 'deleted successfully',
             ], 200);
         } else {
             return response()->json([

@@ -14,8 +14,7 @@ import Slide from '@material-ui/core/Slide';
 import baby_icon from '../../../../../../public/img/baby_icon.png';
 import baby from '../../../../../../public/img/baby.png';
 import { withRouter } from 'react-router';
-import MyBaby from '../MyBaby/MyBaby';
-import FirstMemory from '../FirstMemory/FirstMemory';
+
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -63,6 +62,10 @@ const MenuModal = () => {
     history.push('/share');
     handleClose();
   };
+  const handleToCalendar = () => {
+    history.push('/calendar');
+    handleClose();
+  };
 
 
   return (
@@ -88,7 +91,7 @@ const MenuModal = () => {
           </ListItem>
         
           <ListItem button>
-            <ListItemText primary="カレンダー" />
+            <ListItemText primary="カレンダー" onClick={handleToCalendar}/>
           </ListItem>
      
           <ListItem button onClick={handleToFirstMemory}>

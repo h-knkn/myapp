@@ -41,3 +41,5 @@ Route::apiResource('babyinfo', 'BabyInfoController');
 Route::apiResource('firstmemory', 'FirstMemoryController');
 // Share
 Route::apiResource('share', 'ShareController');
+// Calendar
+Route::apiResource('/calendar', 'CalendarController');

@@ -10,6 +10,7 @@ import UserPage from './views/User/Home/UserPage';
 import MyBaby from './views/User/MyBaby/MyBaby';
 import FirstMemory from './views/User/FirstMemory/FirstMemory';
 import ShareInfo from './views/User/ShareInfo/ShareInfo';
+import Calendar from './views/User/Calendar/Calendar';
 import {
      MainPage
 
@@ -27,6 +28,7 @@ const Routes = () => {
           <Route path="/babyprofile" exact component={MyBaby}/>
           <Route path="/firstmemory" exact component={FirstMemory}/>
           <Route path="/share" exact component={ShareInfo}/>
+          <Route path="/calendar" exact component={Calendar}/>
         
  
            {/* <PrivateRoute path='/userprofile' exact component={UserPage}/> */}
