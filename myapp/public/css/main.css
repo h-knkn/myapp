@@ -202,7 +202,10 @@ body {
     display: flex;
     justify-content: center;
 }
-
+.editDialog {
+    width: 600px!important;
+    height: 300px!important;
+}
 /* share */
 .info-box {
     margin: 50px;

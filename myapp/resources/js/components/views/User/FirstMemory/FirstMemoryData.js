@@ -43,7 +43,7 @@ const FirstMemoryData = (props) => {
 
     const history = useHistory();
 
-    const { userData, setUserData, allergies ,first , setFirst, memo, setMemo, change, setChange} = props;
+    const { userData, setUserData, allergies, startDate ,first , setFirst, memo, setMemo, change, setChange} = props;
 
     const [open, setOpen] = useState(false);
     const [detail, setDetail] = useState("");
@@ -86,7 +86,7 @@ const FirstMemoryData = (props) => {
         }
         getDetails();
     }
-  
+    
 
     // 編集画面へ
     const showEdit = () => {
@@ -117,18 +117,18 @@ const FirstMemoryData = (props) => {
         location.reload();
     };
 
-    // 削除
-    const deleteInfo = ()=> {
-        axios
-        .delete(`api/firstmemory/${detailId}`)
-        .then(res => {
-            console.log("削除しました");
-        })
-        .catch(err => {
-            alert("削除できませんでした");
-        });
-        handleClose();
-        location.reload();
+     // 削除
+     const deleteInfo = ()=> {
+      axios
+      .delete(`api/firstmemory/${detailId}`)
+      .then(res => {
+          console.log("削除しました");
+      })
+      .catch(err => {
+          alert("削除できませんでした");
+      });
+      handleClose();
+      location.reload();
     }
        
     return(
@@ -164,7 +164,7 @@ const FirstMemoryData = (props) => {
         aria-labelledby="alert-dialog-slide-title"
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogContent> 
+        <DialogContent  className="editDialog"> 
             { show ? <DatePicker 
             selected={startDate}
             placeholderText="日付"
@@ -197,14 +197,14 @@ const FirstMemoryData = (props) => {
         </DialogContent>
         <DialogActions>
         {!show ?
-          <>
-            <Button onClick={showEdit} color="primary">
-                編集
-            </Button>
-            <Button onClick={deleteInfo} color="primary">
-                削除する
-            </Button>
-          </>:
+          <div>
+          <Button onClick={showEdit} color="primary">
+            編集
+          </Button>
+          <Button  onClick={deleteInfo} color="primary">
+            削除
+          </Button>
+          </div>:
           <>
             <Button onClick={goBack} color="primary">
                 もどる

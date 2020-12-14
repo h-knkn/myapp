@@ -2,12 +2,12 @@ import React , {useState, useEffect, useCallback} from 'react';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuModal from '../../User/Home/MenuModal';
-import dayjs from "dayjs";
-import {
-  GridList,
-  Typography
-} from "@material-ui/core";
-import FullCalendar from '@fullcalendar/react'
+
+import FullCalendar from '@fullcalendar/react';
+import DatePicker, { registerLocale } from "react-datepicker";
+
+// DatePickerのロケールを設定に使用。
+import ja from 'date-fns/locale/ja'
 
 // FullCalendarで週表示を可能にするモジュール。
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -34,8 +34,39 @@ const useStyles = makeStyles((theme) => ({
     display:'flex',
     alignItems:'flex-start',
   },
+  cover: {
+    opacity: 0,
+    visibility: 'hidden',
+    position: 'fixed',
+    width: '100%',
+    height: '100%',
+    zIndex: 1000,
+    top: 0,
+    left: 0,
+    background: 'rgba(0, 0, 0, 0.3)'
+  },
+  form: {
+    opacity: 0,
+    visibility: 'hidden',
+    position: 'fixed',
+    top: '30%',
+    left: '40%',
+    fontWeight: 'bold',
+    background: 'rgba(255, 255, 255)',
+    width: '400px',
+    height: '300px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 2000,
+  },
+  inView: { // cover, formを表示する時に適用するStyle。
+    opacity: 1,
+    visibility: 'visible'
+  },
 }));
 
+registerLocale('ja', ja)
 
 
 
@@ -57,10 +88,11 @@ const logoutButton = (e) => {
 const Calendar = () => {
   const classes = useStyles();
 
-  const opneDialog = () =>{
-    const id = e.currentTarget.getAttribute('data-id');
-    
-  }
+  const [inputTitle, setInputTitle] = useState('') // フォームに入力されたタイトル。
+  const [inputStart, setInputStart] = useState(new Date) // イベントの開始時刻。
+  const [inputEnd, setInputEnd] = useState(new Date) // イベントの終了時刻。
+  const [inView, setInView] = useState(false) // イベント登録フォームの表示有無。(trueなら表示する。)
+  
   
 
 
