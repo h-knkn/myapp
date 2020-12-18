@@ -93,7 +93,7 @@ const FirstMemory = () => {
     const [initialItem , setInitialItem] = useState([]);
     const [items , setItems] = useState([]);
 
-    console.log(initialItem);
+  
 
 
     // newDateをyyyy-mm-dd形式に変える
@@ -107,6 +107,10 @@ const FirstMemory = () => {
     };
     const handleClose = () => {
       setOpen(false);
+      // モーダル閉じると値リセット
+      setFirst("");
+      setMemo("");
+      setChange("");
     };
 
     const inputFirst = useCallback((event) => {
@@ -179,9 +183,6 @@ const FirstMemory = () => {
         return;
         }
     }
-
-    console.log(userData);
-
 
     return(
     <div>

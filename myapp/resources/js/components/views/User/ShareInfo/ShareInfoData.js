@@ -47,24 +47,24 @@ const ShareInfoData = (props) => {
 
     // 更新
     const editShareInfo = () => {
-        const newShareInfo = {
-            allergies: allergies,
-            allergies_name: allergiesName,
-            house_rules: houseRules,
-            kids_rules: kidsRules,
-            request_to: requestTo,
-            memo: memo,
-          }
-          axios
-            .put(`api/share/1`, newShareInfo)
-            .then(res => {
-              console.log("成功！");
-            })
-            .catch(err => {
-              alert("更新に失敗しました");
-            });
-            handleClose();
-            location.reload();
+      const newShareInfo = {
+      allergies: allergies,
+      allergies_name: allergiesName,
+      house_rules: houseRules,
+      kids_rules: kidsRules,
+      request_to: requestTo,
+      memo: memo,
+      }
+      axios
+        .put(`api/share/1`, newShareInfo)
+        .then(res => {
+         console.log("成功！");
+        })
+        .catch(err => {
+         alert("更新に失敗しました");
+      });
+        handleClose();
+        location.reload();
     }
 
 

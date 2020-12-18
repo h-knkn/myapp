@@ -15,10 +15,9 @@ class CalendarController extends Controller
     public function index()
     {
         $calendar = Calendar::all();
-        return response()->json([
-            'message' => 'ok',
-            'data' => $calendar
-        ], 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json(
+            $calendar
+        , 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -68,8 +67,8 @@ class CalendarController extends Controller
     {
         $update = [
             'title' => $request->title,
-            'start_time' => $request->start_time,
-            'end_time' => $request->end_time,
+            'date' => $request->date,
+            // 'end_time' => $request->end_time,
             'description' => $request->description,
         ];
         $calendar = Calendar::where('id', $id)->update($update);

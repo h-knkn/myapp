@@ -253,7 +253,12 @@ body {
 }
 
 /* Calendar */
-.calendar-container {
-    max-width: 80%;
-    margin: 0 auto;
+.react-calendar__tile {
+    padding: 2.5em 1.5em !important;
 }
+/* .react-calendar__tile:enabled:focus {
+    background:none!important;
+}
+.react-calendar__tile:enabled:hover{
+    background: none!important;
+} */
