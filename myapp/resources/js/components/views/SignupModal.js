@@ -47,9 +47,6 @@ const SignupModal = (props) => {
   const [password , setPassword] = useState("");
   const [password_confirmation , setPassword_confirmation] = useState("");
 
-  const { register, handleSubmit, errors } = useForm();
-  // const onSubmit = data => console.log(data);
-
   const inputName = useCallback((event) => {
     setName(event.target.value)
   },[setName]);
