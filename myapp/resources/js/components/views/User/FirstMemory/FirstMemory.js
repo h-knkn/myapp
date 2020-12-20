@@ -7,16 +7,20 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Input from '@material-ui/core/Input';
-
 import MenuModal from '../../User/Home/MenuModal';
 import FirstMemoryData from './FirstMemoryData';
 import axios from "axios";
-
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-
-import baby from '../../../../../../public/img/baby.png';
 import searchIcon from '../../../../../../public/img/search.png';
+
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -90,8 +94,12 @@ const FirstMemory = () => {
     const [first , setFirst] = useState("");
     const [memo , setMemo] = useState("");
     const [change , setChange] = useState("");
-    const [initialItem , setInitialItem] = useState([]);
+    // const [initialItem , setInitialItem] = useState([]);
     const [items , setItems] = useState([]);
+    // 検索用
+    const [firstAll , setFirstAll] = useState([]);
+    // const [memoAll , setMemoAll] = useState([]);
+    // const [searchAllList , setSearchAllList] = useState([]);
 
   
 
@@ -150,24 +158,39 @@ const FirstMemory = () => {
           location.reload();
         })
     }
+
+    useEffect(() => { 
+      setItems(firstAll);
+      console.log(items);
+    }, []);
+    
     // 全件取得
     useEffect(() => { 
       const getAll = async () => {
         const response = await axios.get(`api/firstmemory`);
           setUserData(response.data.data); 
+          const res = response.data.data;
+          const firstlist = res.map(item => item.first);
+          setFirstAll(firstlist);
+          // const memoAll = res.map(item => item.memo);
+          // setMemoAll(memoAll);
         }
         getAll();
     }, []);
 
+    console.log(userData);
+    console.log(firstAll);
+    console.log(items);
+    // console.log(memoAll);
+    // console.log(searchAllList);
+    
     const filterList = (e) => {
-      const search = userData.first;
-      const updateList = search.filter((item) => {
+      const updateList = firstAll.filter((item) => {
         return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
       })
-      setItems({updateList});
+      setItems(updateList);
       console.log(items);
     }
-
 
     // ログアウト
     const logoutButton = (e) => {
@@ -198,18 +221,35 @@ const FirstMemory = () => {
                 <Button onClick={handleClickOpen} className={classes.addButton}>
                 追加する
                 </Button>
-                <form action="">
                   <Input placeholder="検索" onChange={filterList}/>
                   <img src={searchIcon} className={classes.searchButton}/>
-                </form>
+                <div>
+                  {items.map((item, index) => {
+                    return (
+                      <li key={index}>{item}</li>
+                    )  
+                  })}
+                <TableContainer component={Paper} className={classes.table}>
+                  <Table>
+                    <TableHead className={classes.head}>
+                      <TableRow>
+                        <TableCell align="center">できたこと</TableCell>
+                          <TableCell align="center">日付</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {items.map((item, index) => {
+                    return (
+                      <TableCell key={index}>{item}</TableCell>
+                    )  
+                      })}
+                    
+                  </TableBody>
+                </Table>
+              </TableContainer>
+                </div>
             </div>
-            <div>
-            {/* {items.map((item, index) => {
-              return (
-                <li key={index}>{item}</li>
-              )  
-             })} */}
-        </div>
+    
             {/* 追加モーダル */}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" >
             <DialogTitle id="form-dialog-title" className={classes.addModal}>はじめて</DialogTitle>

@@ -115,14 +115,12 @@ const LoginModal = (props) => {
             <div className={classes.text}> 
             <form onSubmit={onSubmit}>
               <TextField
-              id="standard-basic" 
               label="メールアドレス"
               value={email}
               onChange={inputEmail}
               fullWidth
               rows={1}/>
               <TextField
-              id="standard-basic"
               label="パスワード"
               value={password}
               onChange={inputPassword}

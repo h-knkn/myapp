@@ -113,7 +113,6 @@ const SignupModal = (props) => {
         <DialogContent className={classes.content}>
             <div className={classes.text}> 
                 <TextField
-                id="standard-basic"
                 label="名前"
                 value={name}
                 onChange={inputName}
@@ -123,7 +122,6 @@ const SignupModal = (props) => {
                 rows={1}/>
 
                 <TextField
-                id="standard-basic" 
                 label="メールアドレス"
                 value={email}
                 onChange={inputEmail}
@@ -131,14 +129,12 @@ const SignupModal = (props) => {
                 rows={1}/>
 
                 <TextField
-                id="standard-basic"
                 label="パスワード"
                 value={password}
                 onChange={inputPassword}
                 fullWidth
                 rows={1}/>
                 <TextField
-                id="standard-basic"
                 label="パスワード確認"
                 value={password_confirmation}
                 onChange={inputPassword_confirmation}

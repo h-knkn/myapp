@@ -145,8 +145,7 @@ const Calendar = () => {
         id = element.id;
       }
     });// end forEach
-    console.log(id);
-
+    
     const newEditInfo = {
       title: title,
       date: selectDay,
