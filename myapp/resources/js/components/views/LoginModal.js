@@ -68,7 +68,6 @@ const LoginModal = (props) => {
           const token = localStorage.getItem('access_token');
           const isAuth = {setIsLoggedIn:token};
           console.log(isLoggedIn);
-          // setIsLoggedIn(true);
           console.log(isAuth);
           console.log(user.token);
           if(token){
@@ -116,12 +115,14 @@ const LoginModal = (props) => {
             <form onSubmit={onSubmit}>
               <TextField
               label="メールアドレス"
+              type="email"
               value={email}
               onChange={inputEmail}
               fullWidth
               rows={1}/>
               <TextField
               label="パスワード"
+              type="password"
               value={password}
               onChange={inputPassword}
               fullWidth
