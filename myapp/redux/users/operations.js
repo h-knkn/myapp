@@ -1,13 +1,12 @@
 import {auth} from '../../firebase/firebase';
 import axios from "axios";
 import {push, goBack} from 'connected-react-router';
-import {useDispatch} from "react-redux";
 import {
-    signInAction,
+    LogInaction,
 } from "./actions";
 
 const isValidEmailFormat = (email) => {
-    const regex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    const regex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
     return regex.test(email)
 }
 
@@ -67,3 +66,95 @@ export const signUp = (name, email, password, password_confirmation) => {
             })
     }
 }
+
+export const LogIn = (email, password) => {
+    return async (dispatch) => {
+       
+        if (email === ''|| password ==='') {
+            alert('メールアドレスかパスワードが未入力です。')
+            return false
+        }
+
+        auth.signInWithEmailAndPassword(email, password)
+            .then(result => {
+            const userState = result.user
+            console.log(userState);
+            if (userState) {
+                const emailAdress = userState.email
+                console.log(emailAdress);
+
+                axios
+                    .get(`api/userdetail/${emailAdress}`)
+                    .then(res => {
+                        const data = res.data;
+                        console.log(data);
+
+                        dispatch(LogInaction({
+                            isSignedIn: true,
+                            // role: data.role,
+                            name: data.name,
+                        }));
+                        dispatch(push('/userprofile'));
+
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+                }})
+
+
+    //     const signInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAA--43PUdsRiahK2Aa5LpXbujGm0qpR9A'
+    //     const user = {
+    //         email: email,
+    //         password: password
+    //     }
+
+    //     const getUserInfoUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAA--43PUdsRiahK2Aa5LpXbujGm0qpR9A'
+
+    //     axios.post(signInUrl, user)
+    //         .then(response => {
+    //           // 返ってきたトークンをローカルストレージに格納する
+    //           console.log(response);
+    //           localStorage.setItem('token', response.data.idToken);
+             
+    //           console.log(token);
+    //         })
+    //         .catch(error => {
+    //           alert("ログインに失敗しました。");
+    //         })
+    //         const access_token = localStorage.getItem('token');
+    //         console.log(access_token);
+
+
+    //     // const token = localStorage.getItem('token');
+    //     // const body = {"idToken":token}
+    //     // console.log(token);
+
+    //     await axios
+    //     .post(getUserInfoUrl, {
+    //                 headers: {'Content-Type': 'application/json'}, "idToken":access_token
+    //               })
+    //             .then(res => {
+    //               console.log(res.data);
+    //               const data = res.data.users;
+
+               
+    //             }).catch(error => {
+    //                 alert("ログインに失敗しました。")
+    //             })
+        
+        
+    //         if (localStorage.getItem('token')) {
+                
+    //             alert("ログイン完了");
+    //             dispatch(LogInaction({
+    //                 isSignedIn: true,
+    //                 role: data.role,
+    //                 name: data.name,
+    //             }));
+    //             dispatch(push('/userprofile'));
+    //           }
+     }
+    
+};
+        

@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 
 import {signUp} from "../../../../redux/users/operations";
 import {push} from "connected-react-router";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 const SignupModal = (props) => {
 
   const dispatch = useDispatch();
+  // const selector = useSelector((state) => state);
   const classes = useStyles();
 
   const [name , setName] = useState("");

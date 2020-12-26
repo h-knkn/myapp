@@ -15,17 +15,19 @@ import {
 
   
   const history = History.createBrowserHistory();
-  export const store = createStore();
+  export const store = createStore(history);
   
   const App = () => {
     return (
       <div>
         <Provider store={store}>
-        <Router>
+        <ConnectedRouter history={history}>
+       
         <Switch>
         <Routes/>
         </Switch>
-        </Router>
+     
+        </ConnectedRouter>
         </Provider>
       </div>
     )

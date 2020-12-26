@@ -2,7 +2,8 @@ export const initialState = {
     users: {
         email: "",
         isSignedIn: false,
-        uid: "ひゅー",
+        role: "",
+        uid: "",
         name: ""
     }
 };

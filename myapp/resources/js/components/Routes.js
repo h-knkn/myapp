@@ -20,7 +20,7 @@ import {
 
 const Routes = () => {
     return(
-    
+     
         <Switch>
           <Route path="/" exact component={MainPage}/>
         
@@ -33,7 +33,7 @@ const Routes = () => {
  
            {/* <PrivateRoute path='/userprofile' exact component={UserPage}/> */}
         </Switch>
-       
+    
     )
 }
 
