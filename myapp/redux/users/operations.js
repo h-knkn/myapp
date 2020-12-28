@@ -3,12 +3,39 @@ import axios from "axios";
 import {push, goBack} from 'connected-react-router';
 import {
     LogInaction,
+    signOutAction
 } from "./actions";
 
 const isValidEmailFormat = (email) => {
     const regex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
     return regex.test(email)
 }
+
+export const listenAuthState = () => {
+    return async (dispatch) => {
+        return auth.onAuthStateChanged(user => {
+            if (user) {
+                const emailAdress = user.email
+                console.log(emailAdress);
+                axios
+                    .get(`api/userdetail/${emailAdress}`)
+                    .then(res => {
+                        const data = res.data;
+                        console.log(data);
+
+                        dispatch(LogInaction({
+                            isSignedIn: true,
+                            // role: data.role,
+                            name: data.name,
+                        }));
+                        dispatch(push('/userprofile'));
+                    })
+            } else {
+                dispatch(push('/'))
+            }
+        })
+    }
+};
 
 
 export const signUp = (name, email, password, password_confirmation) => {
@@ -59,11 +86,30 @@ export const signUp = (name, email, password, password_confirmation) => {
                         })
                         .catch(err => {
                           alert("登録に失敗しました。");
-                        }); 
-                  
+                        });   
                 }
-            
-            })
+          })
+    }
+};
+
+export const resetPassword = (email) => {
+    return async (dispatch) => {
+        if (email === '') {
+            alert('メールアドレスを入力してください。')
+            return false
+        }
+        if (!isValidEmailFormat(email)) {
+            alert('メールアドレスの形式が不正です。')
+            return false
+        } else {
+            return auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    alert('入力されたアドレス宛にパスワードリセットのメールをお送りしましたのでご確認ください。')
+                    dispatch(push('/'))
+                }).catch(() => {
+                    alert('登録されていないメールアドレスです。もう一度ご確認ください。')
+                })
+        }
     }
 }
 
@@ -74,15 +120,14 @@ export const LogIn = (email, password) => {
             alert('メールアドレスかパスワードが未入力です。')
             return false
         }
-
         auth.signInWithEmailAndPassword(email, password)
             .then(result => {
-            const userState = result.user
-            console.log(userState);
+                const userState = result.user
+                console.log(userState);
+
             if (userState) {
                 const emailAdress = userState.email
                 console.log(emailAdress);
-
                 axios
                     .get(`api/userdetail/${emailAdress}`)
                     .then(res => {
@@ -92,69 +137,26 @@ export const LogIn = (email, password) => {
                         dispatch(LogInaction({
                             isSignedIn: true,
                             // role: data.role,
-                            name: data.name,
+                            name: "はい",
                         }));
                         dispatch(push('/userprofile'));
-
                     })
                     .catch(err => {
                         console.log(err);
                     });
-                }})
+            }
+        })
+    }  
+};
 
 
-    //     const signInUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAA--43PUdsRiahK2Aa5LpXbujGm0qpR9A'
-    //     const user = {
-    //         email: email,
-    //         password: password
-    //     }
-
-    //     const getUserInfoUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyAA--43PUdsRiahK2Aa5LpXbujGm0qpR9A'
-
-    //     axios.post(signInUrl, user)
-    //         .then(response => {
-    //           // 返ってきたトークンをローカルストレージに格納する
-    //           console.log(response);
-    //           localStorage.setItem('token', response.data.idToken);
-             
-    //           console.log(token);
-    //         })
-    //         .catch(error => {
-    //           alert("ログインに失敗しました。");
-    //         })
-    //         const access_token = localStorage.getItem('token');
-    //         console.log(access_token);
-
-
-    //     // const token = localStorage.getItem('token');
-    //     // const body = {"idToken":token}
-    //     // console.log(token);
-
-    //     await axios
-    //     .post(getUserInfoUrl, {
-    //                 headers: {'Content-Type': 'application/json'}, "idToken":access_token
-    //               })
-    //             .then(res => {
-    //               console.log(res.data);
-    //               const data = res.data.users;
-
-               
-    //             }).catch(error => {
-    //                 alert("ログインに失敗しました。")
-    //             })
-        
-        
-    //         if (localStorage.getItem('token')) {
-                
-    //             alert("ログイン完了");
-    //             dispatch(LogInaction({
-    //                 isSignedIn: true,
-    //                 role: data.role,
-    //                 name: data.name,
-    //             }));
-    //             dispatch(push('/userprofile'));
-    //           }
-     }
-    
+export const singOut = () => {
+    return async (dispatch) => {
+        auth.signOut()
+        .then(() => {
+            dispatch(signOutAction());
+            dispatch(push('/'))
+        })
+    }
 };
         

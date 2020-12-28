@@ -4,7 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 import PhotoButton from './PhotoButton';
 import MenuModal from './MenuModal';
-
+import {getSignedIn, getUsersName} from '../../../../../../redux/users/selectors';
+import {useDispatch, useSelector} from "react-redux";
+import {singOut} from "../../../../../../redux/users/operations";
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -30,8 +32,14 @@ const useStyles = makeStyles((theme) => ({
 const UserPage = (props) => {
 
   const classes = useStyles();
-  
+  const dispatch = useDispatch();
+  const selector = useSelector(state => state);
+  const getLoginState = getSignedIn(selector);
+  const getName = getUsersName(selector);
   const [userData, setUserData] = useState([]);
+
+  console.log(getLoginState);
+  console.log(getName);
   
 
   useEffect(() => {
@@ -64,12 +72,13 @@ const UserPage = (props) => {
   <div className={classes.main}>
     <div className={classes.displayFlex}>
       <MenuModal />
-      <Button className={classes.logoutButton} onClick={logoutButton}>
+      <Button className={classes.logoutButton} onClick={() => dispatch(singOut())}>
         ログアウト
       </Button>
     </div>
     <div>こんにちは{userData.name}さん</div> 
-    <div>あなたのメールアドレスは{userData.email}です</div> 
+    <div>あなたのメールアドレスは{userData.email}です</div>
+    <p>{getName}</p>
     <PhotoButton />
   </div>
     

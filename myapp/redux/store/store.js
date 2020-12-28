@@ -6,6 +6,7 @@ import {
 import thunk from 'redux-thunk';
 import {UsersReducer} from '../users/reducers';
 import {connectRouter, routerMiddleware} from 'connected-react-router'
+import { useSelector } from 'react-redux';
 
 export default function createStore(history) {
 

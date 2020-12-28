@@ -138,6 +138,7 @@ const LoginModal = (props) => {
           <Button className={classes.signUpButton} onClick={() => dispatch(LogIn(email, password))}>
             ログイン
           </Button>
+          <p onClick={props.onClickReset}>パスワードを忘れた方はこちら</p>
           
             </div>
         </DialogContent>

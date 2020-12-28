@@ -7,8 +7,11 @@ export const UsersReducer = (state = initialState.users, action)  => {
         case Actions.SIGN_IN:
             return {
                 ...state,
-                icon_path: action.payload.icon_path,
-                username: action.payload.username
+                ...action.payload
+            };
+        case Actions.SIGN_OUT:
+            return {
+                ...action.payload
             };
         default:
             return state
