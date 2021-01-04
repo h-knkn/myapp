@@ -112,8 +112,6 @@ const PhotoButton = () => {
     const fetchImages = async () => {
     let result = await storageRef.child('images').listAll();
         let urlPromises = result.items.map(imageRef => imageRef.getDownloadURL());
-    
-        console.log(result);
         console.log(urlPromises);
         console.log(files);
         console.log(image);

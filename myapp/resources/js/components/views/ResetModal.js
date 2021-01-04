@@ -40,10 +40,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ResetModal = (props) => {
 
+  const { email, setEmail} = props;
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const [email , setEmail] = useState("");
+ 
 
   const inputEmail = useCallback((event) => {
     setEmail(event.target.value)
@@ -69,7 +70,7 @@ const ResetModal = (props) => {
               <TextField
               label="メールアドレス"
               type="email"
-              value={email}
+              value={props.email}
               onChange={inputEmail}
               fullWidth
               rows={1}/>

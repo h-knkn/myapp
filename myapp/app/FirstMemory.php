@@ -12,4 +12,9 @@ class FirstMemory extends Model
         'date',
         'memo',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

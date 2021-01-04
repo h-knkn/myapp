@@ -48,9 +48,6 @@ const LoginModal = (props) => {
 
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [error, setError] = useState('');
-  const [formSubmitting, setFormSubmitting] = useState('');
 
   const inputEmail = useCallback((event) => {
     setEmail(event.target.value)

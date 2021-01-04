@@ -3,7 +3,7 @@ export const initialState = {
         email: "",
         isSignedIn: false,
         role: "",
-        uid: "",
+        id: "",
         name: ""
     }
 };

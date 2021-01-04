@@ -23,12 +23,12 @@ class JWTAuthController extends Controller
     {
         $user = User::where('email', $email)->first();
         if ($user) {
-            return response()->json([
+            return response()->json(
                  $user
-            ], 200, [], JSON_UNESCAPED_UNICODE);
+            , 200, [], JSON_UNESCAPED_UNICODE);
         } else {
             return response()->json([
-                'message' => 'ユーザー情報がありません',
+                'message' => 'ok',
             ], 404);
         }
     }

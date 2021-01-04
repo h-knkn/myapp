@@ -15,6 +15,8 @@ class User extends Authenticatable implements JWTSubject
         'name', 'email', 'password'
     ];
 
+    // protected $fillable = ['users'];
+
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -30,5 +32,22 @@ class User extends Authenticatable implements JWTSubject
             'name' => $this->name,
             'email' => $this->email
         ];
+    }
+
+    public function babyinfo()
+    {
+        return $this->hasOne('App\BabyInfo');
+    }
+    public function calendars()
+    {
+        return $this->hasMany('App\Calendar');
+    }
+    public function firstmemorys()
+    {
+        return $this->hasMany('App\FirstMemory');
+    }
+    public function shares()
+    {
+        return $this->hasMany('App\Share');
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\BabyInfo;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class BabyInfoController extends Controller
 {
@@ -14,11 +16,18 @@ class BabyInfoController extends Controller
      */
     public function index()
     {
-        $babyinfo = BabyInfo::where('id',1)->first();
-        return response()->json([
-            'message' => 'ok',
-            'data' => $babyinfo
-        ], 200);
+        $babyinfo = BabyInfo::all();
+        return response()->json(
+            $babyinfo
+        , 200);
+        
+        // $user = User::find($user->id);
+        // $babyinfo = BabyInfo::where('user_id', $user_id)->get();
+        // $babyinfo = User::find($id)->load('babyinfo');
+        // return response()->json([
+        //     'message' => 'ok',
+        //     'data' => $babyinfo
+        // ], 200);
     }
 
     /**
@@ -30,10 +39,9 @@ class BabyInfoController extends Controller
     public function store(Request $request)
     {
         $babyinfo = BabyInfo::create($request->all());
-        return response()->json([
-            'message' => 'BabyInfo created successfully',
-            'data' => $babyinfo
-        ], 201, [], JSON_UNESCAPED_UNICODE);
+        return response()->json(
+           $babyinfo
+        , 201, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**

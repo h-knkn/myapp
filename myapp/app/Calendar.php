@@ -13,4 +13,9 @@ class Calendar extends Model
         // 'end_time',
         'description',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

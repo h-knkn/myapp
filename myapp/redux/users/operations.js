@@ -10,25 +10,27 @@ const isValidEmailFormat = (email) => {
     const regex = /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/;
     return regex.test(email)
 }
+export const getCurrentUser = () => {
 
+}
 export const listenAuthState = () => {
     return async (dispatch) => {
         return auth.onAuthStateChanged(user => {
             if (user) {
                 const emailAdress = user.email
                 console.log(emailAdress);
+                console.log(user);
                 axios
                     .get(`api/userdetail/${emailAdress}`)
                     .then(res => {
                         const data = res.data;
                         console.log(data);
-
+                        console.log(data.id);
                         dispatch(LogInaction({
                             isSignedIn: true,
-                            // role: data.role,
+                            id: data.id,
                             name: data.name,
                         }));
-                        dispatch(push('/userprofile'));
                     })
             } else {
                 dispatch(push('/'))
@@ -104,7 +106,7 @@ export const resetPassword = (email) => {
         } else {
             return auth.sendPasswordResetEmail(email)
                 .then(() => {
-                    alert('入力されたアドレス宛にパスワードリセットのメールをお送りしましたのでご確認ください。')
+                    alert('入力されたアドレス宛にパスワードリセットのメールをお送りしましたのでご確認ください。');
                     dispatch(push('/'))
                 }).catch(() => {
                     alert('登録されていないメールアドレスです。もう一度ご確認ください。')

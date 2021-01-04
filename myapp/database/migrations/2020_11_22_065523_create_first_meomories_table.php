@@ -15,10 +15,15 @@ class CreateFirstMeomoriesTable extends Migration
     {
         Schema::create('first_meomories', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('first', 20);
             $table->date('date');
             $table->string('memo', 100);
             $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

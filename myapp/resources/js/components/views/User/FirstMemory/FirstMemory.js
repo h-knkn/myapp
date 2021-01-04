@@ -1,4 +1,6 @@
 import React , {useState, useEffect, useCallback} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {singOut} from "../../../../../../redux/users/operations";
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -13,7 +15,6 @@ import axios from "axios";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import searchIcon from '../../../../../../public/img/search.png';
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -85,6 +86,8 @@ const useStyles = makeStyles((theme) => ({
 const FirstMemory = () => {
 
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const selector = useSelector(state => state);
 
     const [open, setOpen] = React.useState(false);
     const [startDate, setStartDate] = useState(new Date());
@@ -192,27 +195,12 @@ const FirstMemory = () => {
       console.log(items);
     }
 
-    // ログアウト
-    const logoutButton = (e) => {
-        e.preventDefault()
-        const data = localStorage.getItem('access_token');
-        console.log(data);
-        const res = confirm("ログアウトしますか？");
-        if( res == true ) {
-        localStorage.clear();
-        props.history.push('/');
-        }
-        else {
-        return;
-        }
-    }
-
     return(
     <div>
         <h1 className="text1">はじめて記録</h1>
         <div className={classes.displayFlex}>
         <MenuModal />
-        <Button className={classes.logoutButton} onClick={logoutButton}>
+        <Button className={classes.logoutButton}onClick={() => dispatch(singOut())}>
         ログアウト
         </Button>
         </div>

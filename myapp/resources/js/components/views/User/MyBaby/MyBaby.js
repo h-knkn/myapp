@@ -7,10 +7,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import firebase, { storage } from "../../../../../../firebase/firebase";
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {getUsersId} from '../../../../../../redux/users/selectors';
+import {singOut} from "../../../../../../redux/users/operations";
 import MenuModal from '../../User/Home/MenuModal';
 import star from '../../../../../../public/img/star.png';
 import boy from '../../../../../../public/img/boy.png';
 import girl from '../../../../../../public/img/girl.png';
+import { elementType } from 'prop-types';
 
 
 
@@ -63,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
 const MyBaby = (props) => {
 
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const selector = useSelector(state => state);
+  const id = getUsersId(selector);
 
   // Babyinfo入力
   const [open, setOpen] = useState(false);
@@ -108,41 +115,42 @@ const MyBaby = (props) => {
     setMemo(event.target.value)
   },[setMemo]);
 
+
+  console.log(id);
+
+  //ベイビー情報取得
   useEffect(() => {
-    const getUser = async () => {
-      const response = await axios.get('api/babyinfo');
-        console.log(response.data.data);
-        setUserData(response.data.data);
+    const getInfo = async () => {
+      const response = await axios.get(`api/babyinfo`);
+        const items = response.data;
+        console.log(items);
+        // 配列から指定のオブジェクトを1つだけ取り出す
+        const result = items.find(item => item.user_id === id);
+        console.log(result);
+        setUserData(result);
       }
-      getUser();
+      getInfo();
   },[]);
   console.log(userData);
 
-  const addInfo = newInfo => {
-    return axios
-        .post('api/babyinfo', newInfo, {
-           headers: {'Content-Type': 'application/json'}
+  //ベイビー情報登録
+  const addBabyInfo = () => {
+    axios
+      .post(`api/babyinfo`, {
+        user_id: id,
+        name: name,
+        birth: birth,
+        gender: gender,
+        average_temperature: averagetemperature,
+        memo: memo,
         })
         .then(res => {
-           console.log(res.data);
-          
+          alert("登録しました。");
+          location.reload();
         })
         .catch(err => {
-           console.log(err)
-        })
-  }
-  const onInfoSubmit = (e) => {
-    e.preventDefault()
-    const newInfo = {
-      name: name,
-      birth: birth,
-      gender: gender,
-      average_temperature: averagetemperature,
-      memo: memo,
-    }
-    addInfo(newInfo).then(res=>{
-      alert("登録しました");
-    })
+          alert("登録に失敗しました。");
+        }); 
   }
 
   // 更新
@@ -235,36 +243,19 @@ const MyBaby = (props) => {
     loadImages();
   }, []);
 
-
-  // ログアウト
-  const logoutButton = (e) => {
-    e.preventDefault()
-    const data = localStorage.getItem('access_token');
-    console.log(data);
-    const res = confirm("ログアウトしますか？");
-    if( res == true ) {
-      localStorage.clear();
-      props.history.push('/');
-    }
-    else {
-      return;
-    }
-  }
-
-
   return (
   <div>
      <h1 className="text1">My Baby</h1>
      <div className={classes.displayFlex}>
       <MenuModal />
-      <Button className={classes.logoutButton} onClick={logoutButton}>
+      <Button className={classes.logoutButton} onClick={() => dispatch(singOut())}>
         ログアウト
       </Button>
     </div>
+    <h2>{id}</h2>
     <div className="contents">
     {!userData ? (
       <div className="info-box">
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={onInfoSubmit}>
           <div className={classes.displayFlex}>
             <img className={classes.star} src={star}/>
             <TextField 
@@ -307,8 +298,7 @@ const MyBaby = (props) => {
             onChange={inputMemo} 
             variant="outlined" />
           </div>
-          <Button type="submit" className={classes.upLoadButton}>登録</Button>
-        </form>
+          <Button className={classes.upLoadButton} onClick={addBabyInfo}>登録</Button>
       </div>
       ) : (
         <div>
@@ -322,11 +312,13 @@ const MyBaby = (props) => {
         </div>
         <div className={classes.displayFlex}>
           <img className={classes.star} src={star}/>
-          {userData.gender ==="0" ? (
-                    <p><img src={boy}/></p>
+          <>
+                {userData.gender === 0 ? (
+                     <p><img src={boy}/></p>
                 ) : (
-                  <p><img src={girl}/></p>
-          )}
+                    <p><img src={girl}/></p>
+                )}                
+          </>
         </div>
         <div className={classes.displayFlex}>
           <img className={classes.star} src={star}/>

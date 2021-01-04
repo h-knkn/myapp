@@ -5,6 +5,8 @@ import MenuModal from '../../User/Home/MenuModal';
 import Calendars from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {singOut} from "../../../../../../redux/users/operations";
 
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -51,6 +53,8 @@ const logoutButton = (e) => {
 
 const Calendar = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const selector = useSelector(state => state);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -212,7 +216,7 @@ const Calendar = () => {
           <h1 className="text1">カレンダー</h1>
           <div className={classes.displayFlex}>
           <MenuModal />
-          <Button className={classes.logoutButton} onClick={logoutButton}>
+          <Button className={classes.logoutButton} onClick={() => dispatch(singOut())}>
             ログアウト
           </Button>
           </div>

@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth:api'], function(){
 Route::post('register', 'JWTAuthController@register')->name('api.jwt.register');
 Route::post('login', 'JWTAuthController@login')->name('api.jwt.login');
 Route::get('userinfo', 'JWTAuthController@index');
+Route::get('showid', 'JWTAuthController@showid');
 Route::get('userdetail/{email}', 'JWTAuthController@show');
 
 // Babyinfo

@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuModal from '../../User/Home/MenuModal';
 import TextField from '@material-ui/core/TextField';
 import ShareInfoData from './ShareInfoData';
+import {useDispatch, useSelector} from "react-redux";
+import {singOut} from "../../../../../../redux/users/operations";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,7 +42,8 @@ const useStyles = makeStyles((theme) => ({
 const ShareInfo = () => {
 
     const classes = useStyles();
-
+    const dispatch = useDispatch();
+    const selector = useSelector(state => state);
 
     const [shareInfo, setShareInfo] = useState("");
     const [allergies, setAllergies] = useState("");
@@ -120,27 +123,13 @@ const ShareInfo = () => {
         }); 
     }
 
-     // ログアウト
-     const logoutButton = (e) => {
-        e.preventDefault()
-        const data = localStorage.getItem('access_token');
-        console.log(data);
-        const res = confirm("ログアウトしますか？");
-        if( res == true ) {
-        localStorage.clear();
-        props.history.push('/');
-        }
-        else {
-        return;
-        }
-    }
 
     return(
         <>
             <h1 className="text1">共有事項</h1>
             <div className={classes.displayFlex}>
             <MenuModal />
-            <Button className={classes.logoutButton} onClick={logoutButton}>
+            <Button className={classes.logoutButton} onClick={() => dispatch(singOut())}>
             ログアウト
             </Button>
             </div>

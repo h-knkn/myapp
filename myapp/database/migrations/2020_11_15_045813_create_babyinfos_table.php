@@ -15,12 +15,14 @@ class CreateBabyinfosTable extends Migration
     {
         Schema::create('babyinfos', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('name', 10);
             $table->string('birth', 20);
             $table->integer('gender');
             $table->string('average_temperature', 10);
             $table->string('memo', 100);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

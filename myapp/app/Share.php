@@ -15,4 +15,9 @@ class Share extends Model
         'request_to',
         'memo',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\FirstMemory;
+use App\User;
 
 class FirstMemoryController extends Controller
 {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Share;
+use App\User;
 
 class ShareController extends Controller
 {

@@ -7,12 +7,20 @@ import {SignupModal, Top, LoginModal, ResetModal} from './index';
     const [openSignup, setOpenSignup] = useState(false);
     const [openResetPassword, setopenResetPassword] = useState(false);
 
+    const [email , setEmail] = useState("");
+
+
+    const onClickReset = () => {
+
+      setEmail()
+    }
+
     return (
       <div>
         <Top onClickSignup={() => setOpenSignup(true)}/>
         <SignupModal open={openSignup} handleClose={() => setOpenSignup(false)} onClickLogin={() => { setOpenLogin(true); setOpenSignup(false);}}/>
-        <LoginModal open={openLogin} handleClose={() => setOpenLogin(false)} onClickReset={() => { setopenResetPassword(true); setOpenLogin(false);}}/>
-        <ResetModal open={openResetPassword} handleClose={() => setopenResetPassword(false)}/>
+        <LoginModal open={openLogin} handleClose={() => setOpenLogin(false)} onClickReset={() => { setopenResetPassword(true); setOpenLogin(false); setEmail("")}}/>
+        <ResetModal open={openResetPassword} handleClose={() => setopenResetPassword(false)} email={email} setEmail={setEmail}/>
       </div>
     )
   }
