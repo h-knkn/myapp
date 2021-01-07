@@ -6,6 +6,7 @@ import Calendars from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
+import {getUsersId} from '../../../../../../redux/users/selectors';
 import {singOut} from "../../../../../../redux/users/operations";
 
 import TextField from '@material-ui/core/TextField';
@@ -55,6 +56,7 @@ const Calendar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const selector = useSelector(state => state);
+  const individualID = getUsersId(selector);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -113,6 +115,8 @@ const Calendar = () => {
     const getData = async () => {
       const response = await axios.get('api/calendar');
         console.log(response.data);
+        // const items = response.data;
+        // const result = items.find(item => item.user_id === id);
         setDatabase(response.data);
       }
       getData();
@@ -122,13 +126,14 @@ const Calendar = () => {
   const addSchedule = () => {
     axios
     .post(`api/calendar`, {
+        user_id: individualID,
         title: title,
         date: selectDay,
         description: description
     })
     .then(res => {
       alert("予定を保存しました。");
-      location.reload();
+      // location.reload();
     })
     .catch(err => {
       alert("失敗しました。");

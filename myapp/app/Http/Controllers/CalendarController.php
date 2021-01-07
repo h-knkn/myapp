@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Calendar;
-use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class CalendarController extends Controller
 {

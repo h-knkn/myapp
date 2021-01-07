@@ -150,9 +150,32 @@ body {
     background: -webkit-linear-gradient(top, #FFC0CB, #FFF);
     background: linear-gradient(to bottom, #FFC0CB, #FFF);
 }
-/* .MuiInputBase-input {
-    height: 5px!important;
-} */
+.display-none {
+    display: none;
+}
+
+/* プロフィールアップロード画像 */
+.img-div {
+    position: relative;
+    overflow: hidden;
+    width: 100%
+}
+
+.img-div::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+.img-div > img {
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+}
 
 .mybaby_ul {
     display: flex;
@@ -248,8 +271,7 @@ body {
     margin: 50px;
 }
 .change-color {
-    background-color:#000000!important;
-    opacity:0.8!important;
+    opacity:0.4!important;
 }
 
 /* Calendar */

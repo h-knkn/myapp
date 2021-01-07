@@ -4,9 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
 import PhotoButton from './PhotoButton';
 import MenuModal from './MenuModal';
-import {getSignedIn, getUsersName} from '../../../../../../redux/users/selectors';
+import {getSignedIn, getUsersName, getUsersId} from '../../../../../../redux/users/selectors';
 import {useDispatch, useSelector} from "react-redux";
 import {singOut} from "../../../../../../redux/users/operations";
+import IconButton from '@material-ui/core/IconButton';
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
 
 const useStyles = makeStyles((theme) => ({
     main: {
@@ -36,6 +38,7 @@ const UserPage = (props) => {
   const selector = useSelector(state => state);
   const getLoginState = getSignedIn(selector);
   const getName = getUsersName(selector);
+  const id = getUsersId(selector);
   const [userData, setUserData] = useState([]);
 
   console.log(getLoginState);
@@ -54,19 +57,19 @@ const UserPage = (props) => {
             })
   }, []);
 
-  const logoutButton = (e) => {
-    e.preventDefault()
-    const data = localStorage.getItem('access_token');
-    console.log(data);
-    const res = confirm("ログアウトしますか？");
-    if( res == true ) {
-      localStorage.clear();
-      props.history.push('/');
-    }
-    else {
-      return;
-    }
-  }
+  // const logoutButton = (e) => {
+  //   e.preventDefault()
+  //   const data = localStorage.getItem('access_token');
+  //   console.log(data);
+  //   const res = confirm("ログアウトしますか？");
+  //   if( res == true ) {
+  //     localStorage.clear();
+  //     props.history.push('/');
+  //   }
+  //   else {
+  //     return;
+  //   }
+  // }
 
   return (
   <div className={classes.main}>
@@ -76,9 +79,7 @@ const UserPage = (props) => {
         ログアウト
       </Button>
     </div>
-    <div>こんにちは{userData.name}さん</div> 
-    <div>あなたのメールアドレスは{userData.email}です</div>
-    <p>{getName}</p>
+    <div>こんにちは{getName}さん</div> 
     <PhotoButton />
   </div>
     

@@ -72,16 +72,18 @@ class BabyInfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id)
     {
         $update = [
+           
+            'user_id' => $request->user_id,
             'name' => $request->name,
             'birth' => $request->birth,
             'gender' => $request->gender,
             'average_temperature' => $request->average_temperature,
             'memo' => $request->memo,
         ];
-        $babyinfo = BabyInfo::where('id', $id)->update($update);
+        $babyinfo = BabyInfo::where('user_id', $user_id)->update($update);
         if ($babyinfo) {
             return response()->json([
                 'message' => 'Info updated successfully',
