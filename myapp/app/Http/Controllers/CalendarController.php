@@ -67,6 +67,7 @@ class CalendarController extends Controller
     public function update(Request $request, $id)
     {
         $update = [
+            'user_id' => $request->user_id,
             'title' => $request->title,
             'date' => $request->date,
             // 'end_time' => $request->end_time,

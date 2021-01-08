@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
     width:'85%',
     margin: '0 auto',
   },
+  detailDialog: {
+    width:'400px',
+    height: '300px',
+  },
 }));
 
 // ログアウト
@@ -57,13 +61,13 @@ const Calendar = () => {
   const dispatch = useDispatch();
   const selector = useSelector(state => state);
   const individualID = getUsersId(selector);
-
+  // カレンダー入力情報
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [value, setValue] = useState(new Date());
   const [selectDay, setSelectDay] = useState("");
   const [database, setDatabase] = useState([]);
-
+  // モーダル
   const [openAdd, setOpenAdd] = useState(false);
   const [openSchedule, setOpenSchedule] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
@@ -87,10 +91,11 @@ const Calendar = () => {
     database.forEach(element => {
       if(changes === element.date) {
         setOpenSchedule(true);
-        console.log("test2");
+        console.log("詳細モーダル");
       }
+        setOpenAdd(true);
     });// end forEach
-      setOpenAdd(true);
+     
   }
   
   // モーダルオープン 
@@ -115,12 +120,14 @@ const Calendar = () => {
     const getData = async () => {
       const response = await axios.get('api/calendar');
         console.log(response.data);
-        // const items = response.data;
-        // const result = items.find(item => item.user_id === id);
-        setDatabase(response.data);
+        const items = response.data;
+        // 配列から条件に合うもの全てを返す
+        const result = items.filter(item => item.user_id === individualID);
+        console.log(result);
+        setDatabase(result);
       }
       getData();
-  },[]);
+  },[setDatabase]);
   
   // 予定追加
   const addSchedule = () => {
@@ -133,7 +140,7 @@ const Calendar = () => {
     })
     .then(res => {
       alert("予定を保存しました。");
-      // location.reload();
+      location.reload();
     })
     .catch(err => {
       alert("失敗しました。");
@@ -154,8 +161,12 @@ const Calendar = () => {
         id = element.id;
       }
     });// end forEach
+
+    console.log(id);
+    console.log(selectDay);
     
     const newEditInfo = {
+      user_id: individualID,
       title: title,
       date: selectDay,
       description: description
@@ -169,7 +180,7 @@ const Calendar = () => {
          alert("更新に失敗しました");
       });
         handleClose();
-        location.reload();
+        // location.reload();
   }
 
   // 予定削除
@@ -213,8 +224,9 @@ const Calendar = () => {
     return (
       <p>{message}</p>
     );
-    
   }
+
+  console.log(individualID);
 
     return(
         <>
@@ -229,7 +241,7 @@ const Calendar = () => {
           <Calendars
             value={value}
             onChange={handleChange}
-            // onClickDay={showScheduleDetail}
+            // onClickDay={handleClickOpen}
             tileContent={getTileContent}
             className={classes.calendarUi}
           />
@@ -261,7 +273,7 @@ const Calendar = () => {
           {/* 予定詳細モーダル */}
           <Dialog open={openSchedule} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">予定</DialogTitle>
-            <DialogContent>
+            <DialogContent className={classes.detailDialog}>
               {database.map((row,index) => (
                 <div key={index}>
                     {selectDay === row.date ? (
@@ -288,8 +300,7 @@ const Calendar = () => {
 
           {/* 予定更新モーダル */}
           <Dialog open={openEdit} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">予定</DialogTitle>
-            <DialogContent>
+            <DialogContent className={classes.detailDialog}>
             {database.map((row,index) => (
               <div key={index}>
               {selectDay === row.date ? (
@@ -315,11 +326,9 @@ const Calendar = () => {
               ))}
             </DialogContent>
             <DialogActions>
-
               <Button onClick={editSchedule} color="primary">
                 保存
-              </Button>
-            
+              </Button> 
             </DialogActions>
           </Dialog>
         </>
