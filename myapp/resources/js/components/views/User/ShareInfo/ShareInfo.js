@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import ShareInfoData from './ShareInfoData';
 import {useDispatch, useSelector} from "react-redux";
 import {singOut} from "../../../../../../redux/users/operations";
-
+import {getUsersId} from '../../../../../../redux/users/selectors';
 
 const useStyles = makeStyles((theme) => ({
     logoutButton: {
@@ -44,6 +44,7 @@ const ShareInfo = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const selector = useSelector(state => state);
+    const individualID = getUsersId(selector);
 
     const [shareInfo, setShareInfo] = useState("");
     const [allergies, setAllergies] = useState("");
@@ -80,10 +81,12 @@ const ShareInfo = () => {
 
     const inputKidsRules = useCallback((event) => {
         setKidsRules(event.target.value);
+        console.log("なんやこれは子供との約束や");
       },[setKidsRules]);
 
     const inputRequest = useCallback((event) => {
         setRequestTo(event.target.value);
+        console.log("なんやこれはシッターへのリクエストや");
       },[setRequestTo]);
 
     const inputMemo = useCallback((event) => {
@@ -95,18 +98,27 @@ const ShareInfo = () => {
         axios
           .get(`api/share`)
           .then(res => {
-            setShareInfo(res.data.data);
+            const items = res.data;
+            console.log(items);
+            // 配列から指定のオブジェクトを1つだけ取り出す
+            const result = items.find(item => item.user_id === individualID);
+            setShareInfo(result);
           })
           .catch(err => {
             alert(err);
           });
     }, []);
-    console.log(shareInfo);
+  
 
     // 登録
     const addShareInfo = () => {
+      if(allergies === '' || houseRules === ''|| kidsRules ==='' || requestTo === '' || memo === '') {
+        alert('必須項目が未入力です。');
+        return false
+      }
         axios
         .post(`api/share`, {
+            user_id: individualID,
             allergies: allergies,
             allergies_name: allergiesName,
             house_rules: houseRules,

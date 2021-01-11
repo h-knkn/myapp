@@ -9,6 +9,8 @@ import {useSelector} from "react-redux";
 
 
 
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -32,7 +34,6 @@ const Top = (props) => {
     const classes = useStyles();
 
     const selector = useSelector(state => state);
-    const uid = getUsersId(selector);
     
     const style = {
        textAlign: 'right',
@@ -50,7 +51,6 @@ const Top = (props) => {
             </div>
             <div className="top-text">
               <h1>Baby's日記</h1>
-              <h3>{uid}</h3>
               <h3>大切な子供との毎日の<br/>出来事を気軽に記録しませんか？</h3>
             </div>
         </div>

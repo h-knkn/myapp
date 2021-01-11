@@ -8,6 +8,7 @@ class Share extends Model
 {
     protected $table = 'shares';
     protected $fillable = [
+        'user_id',
         'allergies',
         'allergies_name',
         'house_rules',

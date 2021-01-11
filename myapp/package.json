@@ -36,6 +36,7 @@
         "node-fetch": "^3.0.0-beta.9",
         "prop-types": "^15.7.2",
         "react-calendar": "^3.2.1",
+        "react-cropper": "^2.1.4",
         "react-datepicker": "^3.3.0",
         "react-hook-form": "^6.9.6",
         "react-redux": "^7.2.1",

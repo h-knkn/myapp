@@ -4,10 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuModal from '../../User/Home/MenuModal';
 import TextField from '@material-ui/core/TextField';
 import star from '../../../../../../public/img/star.png';
-import ShareInfo from './ShareInfo';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import {useDispatch, useSelector} from "react-redux";
+import {getUsersId} from '../../../../../../redux/users/selectors';
+import {singOut} from "../../../../../../redux/users/operations";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
 const ShareInfoData = (props) => {
 
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const selector = useSelector(state => state);
+    const individualID = getUsersId(selector);
 
     const [open, setOpen] = useState(false);
 
@@ -47,7 +52,12 @@ const ShareInfoData = (props) => {
 
     // 更新
     const editShareInfo = () => {
+      if(allergies === '' || houseRules === ''|| kidsRules ==='' || requestTo === '' || memo === '') {
+        alert('必須項目が未入力です。');
+        return false
+      }
       const newShareInfo = {
+      user_id: individualID,
       allergies: allergies,
       allergies_name: allergiesName,
       house_rules: houseRules,
@@ -56,7 +66,7 @@ const ShareInfoData = (props) => {
       memo: memo,
       }
       axios
-        .put(`api/share/1`, newShareInfo)
+        .put(`api/share/${individualID}`, newShareInfo)
         .then(res => {
          console.log("成功！");
         })
@@ -122,25 +132,29 @@ const ShareInfoData = (props) => {
             <TextField
               label="お家ルール"
               onChange={inputHouseRules}
-              defaultValue={shareInfo.house_rules}
+              placeholder={shareInfo.house_rules}
+              value={houseRules}
               fullWidth
             />
             <TextField
                 label="子供との決め事"
                 onChange={inputKidsRules}
-                defaultValue={shareInfo.request_to}
+                placeholder={shareInfo.kids_rules}
+                value={kidsRules}
                 fullWidth
             />
             <TextField
               label="シッターへのリクエスト"
               onChange={inputRequest}
-              defaultValue={shareInfo.memo}
+              placeholder={shareInfo.request_to}
+              value={requestTo}
               fullWidth
             />
             <TextField
               label="その他"
               onChange={inputMemo}
-              defaultValue={shareInfo.kids_rules}
+              placeholder={shareInfo.memo}
+              value={memo}
               fullWidth
             />
             </DialogContent>

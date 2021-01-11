@@ -9,6 +9,7 @@ class FirstMemory extends Model
     protected $table = 'first_meomories';
     protected $fillable = [
         'first',
+        'user_id',
         'date',
         'memo',
     ];

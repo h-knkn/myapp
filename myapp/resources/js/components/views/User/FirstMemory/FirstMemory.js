@@ -1,5 +1,6 @@
 import React , {useState, useEffect, useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
+import {getUsersId} from '../../../../../../redux/users/selectors';
 import {singOut} from "../../../../../../redux/users/operations";
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,13 +16,6 @@ import axios from "axios";
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import searchIcon from '../../../../../../public/img/search.png';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -88,8 +82,9 @@ const FirstMemory = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const selector = useSelector(state => state);
+    const individualID = getUsersId(selector);
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
 
     // はじめて情報入力
@@ -103,9 +98,6 @@ const FirstMemory = () => {
     const [firstAll , setFirstAll] = useState([]);
     // const [memoAll , setMemoAll] = useState([]);
     // const [searchAllList , setSearchAllList] = useState([]);
-
-  
-
 
     // newDateをyyyy-mm-dd形式に変える
     const handleChange = (date) => {
@@ -134,33 +126,62 @@ const FirstMemory = () => {
 
 
     // 追加
-    const addFirstInfo = newFirstInfo => {
-        return axios
-        .post('api/firstmemory', newFirstInfo, {
-           headers: {'Content-Type': 'application/json'}
-        })
-        .then(res => {
-            setFirst("");
-            setChange(new Date());
-            setMemo("");
-            return handleClose();
-        })
-        .catch(err => {
-           console.log(err)
-        })
-    }
-    const onFirstInfoSubmit = (e) => {
-        e.preventDefault()
-        const newFirstInfo = {
+    const addFirstInfo = () => {
+      if(first === '' || change === ''|| memo === '') {
+        alert('必須項目が未入力です。');
+        return false
+      }
+      if (first.length > 20) {
+        alert('タイトルは20文字以内で入力してください')
+        return false
+      }
+      if (memo.length > 100) {
+        alert('メモは100文字以内で入力してください')
+        return false
+      }
+      axios
+      .post(`api/firstmemory`, {
+          user_id: individualID,
           first: first,
           date: change,
-          memo: memo,
-        }
-        addFirstInfo(newFirstInfo).then(res=>{
-          alert("登録しました");
-          location.reload();
-        })
+          memo: memo
+      })
+      .then(res => {
+        alert("予定を保存しました。");
+        // location.reload();
+      })
+      .catch(err => {
+        alert("失敗しました。");
+      }); 
     }
+
+    // const addFirstInfo = newFirstInfo => {
+    //     return axios
+    //     .post('api/firstmemory', newFirstInfo, {
+    //        headers: {'Content-Type': 'application/json'}
+    //     })
+    //     .then(res => {
+    //         setFirst("");
+    //         setChange(new Date());
+    //         setMemo("");
+    //         return handleClose();
+    //     })
+    //     .catch(err => {
+    //        console.log(err)
+    //     })
+    // }
+    // const onFirstInfoSubmit = (e) => {
+    //     e.preventDefault()
+    //     const newFirstInfo = {
+    //       first: first,
+    //       date: change,
+    //       memo: memo,
+    //     }
+    //     addFirstInfo(newFirstInfo).then(res=>{
+    //       alert("登録しました");
+    //       location.reload();
+    //     })
+    // }
 
     useEffect(() => { 
       setItems(firstAll);
@@ -171,29 +192,31 @@ const FirstMemory = () => {
     useEffect(() => { 
       const getAll = async () => {
         const response = await axios.get(`api/firstmemory`);
-          setUserData(response.data.data); 
-          const res = response.data.data;
-          const firstlist = res.map(item => item.first);
-          setFirstAll(firstlist);
+         
+          const items = response.data;
+          // 配列から条件に合うもの全てを返す
+          const result = items.filter(item => item.user_id === individualID);
+          setUserData(result); 
+          // const res = response.data;
+          // const firstlist = res.map(item => item.first);
+          // setFirstAll(firstlist);
           // const memoAll = res.map(item => item.memo);
           // setMemoAll(memoAll);
         }
         getAll();
     }, []);
 
-    console.log(userData);
-    console.log(firstAll);
-    console.log(items);
+    // console.log(firstAll);
     // console.log(memoAll);
     // console.log(searchAllList);
     
-    const filterList = (e) => {
-      const updateList = firstAll.filter((item) => {
-        return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
-      })
-      setItems(updateList);
-      console.log(items);
-    }
+    // const filterList = (e) => {
+    //   const updateList = firstAll.filter((item) => {
+    //     return item.toLowerCase().search( e.target.value.toLowerCase()) !== -1;
+    //   })
+    //   setItems(updateList);
+    //   console.log(items);
+    // }
 
     return(
     <div>
@@ -209,9 +232,9 @@ const FirstMemory = () => {
                 <Button onClick={handleClickOpen} className={classes.addButton}>
                 追加する
                 </Button>
-                  <Input placeholder="検索" onChange={filterList}/>
-                  <img src={searchIcon} className={classes.searchButton}/>
-                <div>
+                  {/* <Input placeholder="検索" onChange={filterList}/>
+                  <img src={searchIcon} className={classes.searchButton}/> */}
+                {/* <div>
                   {items.map((item, index) => {
                     return (
                       <li key={index}>{item}</li>
@@ -235,13 +258,12 @@ const FirstMemory = () => {
                   </TableBody>
                 </Table>
               </TableContainer>
-                </div>
+                </div> */}
             </div>
     
             {/* 追加モーダル */}
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" >
             <DialogTitle id="form-dialog-title" className={classes.addModal}>はじめて</DialogTitle>
-            <form className={classes.root} noValidate autoComplete="off" onSubmit={onFirstInfoSubmit}>
             <DialogContent className={classes.dialog}>
             <TextField
             className={classes.TextField}
@@ -267,14 +289,9 @@ const FirstMemory = () => {
             />
             </DialogContent>
             <DialogActions className={classes.displayRight}> 
-            <Button onClick={handleClose} color="primary" onClick={handleClose}　className={classes.cancelButton}>
-            キャンセル
-            </Button>
-            <Button  type="submit" color="primary" className={classes.addButton}>
-            登録
-            </Button>
+              <Button onClick={handleClose} color="primary" onClick={handleClose}　className={classes.cancelButton}>キャンセル</Button>
+              <Button color="primary" className={classes.addButton} onClick={addFirstInfo}>登録</Button>
             </DialogActions>
-            </form>
             </Dialog>
         </div>
         {!userData ? (

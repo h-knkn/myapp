@@ -16,10 +16,9 @@ class FirstMemoryController extends Controller
     public function index()
     {
         $first_meomories = FirstMemory::all();
-        return response()->json([
-            'message' => 'ok',
-            'data' => $first_meomories
-        ], 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json(
+            $first_meomories
+        , 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -68,6 +67,7 @@ class FirstMemoryController extends Controller
     public function update(Request $request, $id)
     {
         $update = [
+            'user_id' => $request->user_id,
             'first' => $request->first,
             'date' => $request->date,
             'memo' => $request->memo,

@@ -141,7 +141,9 @@ export const LogIn = (email, password) => {
                             // role: data.role,
                             name: "はい",
                         }));
-                        dispatch(push('/userprofile'));
+                       
+                        dispatch(push('/userprofile')); 
+                        location.reload();
                     })
                     .catch(err => {
                         console.log(err);

@@ -16,8 +16,9 @@ import boy from '../../../../../../public/img/boy.png';
 import girl from '../../../../../../public/img/girl.png';
 import IconButton from '@material-ui/core/IconButton';
 import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
-import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -88,7 +89,6 @@ const MyBaby = (props) => {
   const [change , setChange] = useState("");
   const [userData, setUserData] = useState([]);
   const [name , setName] = useState("");
-  // const [birth , setBirth] = useState("");
   const [gender , setGender] = useState("");
   const [averagetemperature , setAverageTemperature] = useState("");
   const [memo , setMemo] = useState("");
@@ -138,9 +138,6 @@ const MyBaby = (props) => {
     setMemo(event.target.value)
   },[setMemo]);
 
-
-  console.log(id);
-
   //ベイビー情報取得
   useEffect(() => {
     const getInfo = async () => {
@@ -154,10 +151,25 @@ const MyBaby = (props) => {
       }
       getInfo();
   },[]);
-  console.log(userData);
 
   //ベイビー情報登録
   const addBabyInfo = () => {
+    if(name === '' || gender === ''|| averagetemperature ==='' || change === '' || memo === '') {
+      alert('必須項目が未入力です。');
+      return false
+    }
+    if (name.length > 10) {
+      alert('名前は10文字以内で入力してください')
+      return false
+    }
+    if (averagetemperature.length > 10) {
+      alert('平熱は10文字以内で入力してください')
+      return false
+    }
+    if (memo.length > 100) {
+      alert('メモは100文字以内で入力してください')
+      return false
+    }
     axios
       .post(`api/babyinfo`, {
         id: id,
@@ -179,6 +191,22 @@ const MyBaby = (props) => {
 
   // 更新
   const updateInfo = () => {
+    if(name === '' || gender === ''|| averagetemperature ==='' || change === '' || memo === '') {
+      alert('必須項目が未入力です。');
+      return false
+    }
+        if (name.length > 10) {
+      alert('名前は10文字以内で入力してください')
+      return false
+    }
+    if (averagetemperature.length > 10) {
+      alert('平熱は10文字以内で入力してください')
+      return false
+    }
+    if (memo.length > 100) {
+      alert('メモは100文字以内で入力してください')
+      return false
+    }
     const upInfo = {
       // id: id,
       user_id: id,
@@ -197,7 +225,7 @@ const MyBaby = (props) => {
         alert("更新に失敗しました");
       });
       handleClose();
-      // location.reload();
+      location.reload();
   };
 
 
@@ -272,7 +300,6 @@ const MyBaby = (props) => {
     loadImages();
   }, []);
 
-  console.log(preview);
   return (
   <div>
      <h1 className="text1">My Baby</h1>
@@ -415,7 +442,8 @@ const MyBaby = (props) => {
     <div>
       <div className="img-div">
         <img src={files}/>
-        <img src={preview}/>
+        <p>{image.name}</p>
+        {/* <img src={preview}/> */}
       </div>
     
       <form onSubmit={onSubmit}>

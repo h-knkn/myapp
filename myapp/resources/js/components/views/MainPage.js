@@ -9,12 +9,6 @@ import {SignupModal, Top, LoginModal, ResetModal} from './index';
 
     const [email , setEmail] = useState("");
 
-
-    const onClickReset = () => {
-
-      setEmail()
-    }
-
     return (
       <div>
         <Top onClickSignup={() => setOpenSignup(true)}/>

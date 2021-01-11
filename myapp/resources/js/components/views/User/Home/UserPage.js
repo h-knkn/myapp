@@ -46,6 +46,7 @@ const UserPage = (props) => {
   
 
   useEffect(() => {
+    
     axios
     .get('api/user', {
                headers: {Authorization:`Bearer${localStorage.access_token}`}

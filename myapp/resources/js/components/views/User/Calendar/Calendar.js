@@ -41,20 +41,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// ログアウト
-const logoutButton = (e) => {
-  e.preventDefault()
-  const data = localStorage.getItem('access_token');
-  console.log(data);
-  const res = confirm("ログアウトしますか？");
-  if( res == true ) {
-    localStorage.clear();
-    props.history.push('/');
-  }
-  else {
-    return;
-  }
-}
 
 const Calendar = () => {
   const classes = useStyles();
@@ -93,20 +79,20 @@ const Calendar = () => {
         setOpenSchedule(true);
         console.log("詳細モーダル");
       }
-        setOpenAdd(true);
+        // setOpenAdd(true);
     });// end forEach
      
   }
   
   // モーダルオープン 
-  // const handleClickOpen = () => {
-  //   if(selectDay === "") {
-  //     setOpenAdd(true);
-  //   }
-  //   else {
-  //     setOpenSchedule(true);
-  //   }
-  // };
+  const handleClickOpen = () => {
+    if(selectDay === "") {
+      setOpenAdd(true);
+    }
+    // else {
+    //   setOpenSchedule(true);
+    // }
+  };
   
   const handleClose = () => {
     setOpenAdd(false);
@@ -131,6 +117,18 @@ const Calendar = () => {
   
   // 予定追加
   const addSchedule = () => {
+    if(title === '' || description === '') {
+      alert('必須項目が未入力です。');
+      return false
+    }
+    if (title.length > 50) {
+      alert('タイトルは50文字以内で入力してください')
+      return false
+    }
+    if (description.length > 100) {
+      alert('メモは100文字以内で入力してください')
+      return false
+    }
     axios
     .post(`api/calendar`, {
         user_id: individualID,
@@ -155,6 +153,19 @@ const Calendar = () => {
 
   // 予定更新
   const editSchedule = () => {
+    if(title === '' || description === '') {
+      alert('必須項目が未入力です。');
+      return false
+    }
+    if (title.length > 20) {
+      alert('タイトルは50文字以内で入力してください')
+      return false
+    }
+    if (description.length > 100) {
+      alert('メモは100文字以内で入力してください')
+      return false
+    }
+
     let id = "";
     database.forEach(element => {
       if(selectDay === element.date) {
@@ -180,7 +191,7 @@ const Calendar = () => {
          alert("更新に失敗しました");
       });
         handleClose();
-        // location.reload();
+        location.reload();
   }
 
   // 予定削除
@@ -221,13 +232,18 @@ const Calendar = () => {
          message = element.title;
       }
     });// end forEach
-    return (
-      <p>{message}</p>
-    );
+    
+    const MAX_LENGTH = 5;
+     if (message.length > MAX_LENGTH) {
+  
+      // substr(何文字目からスタートするか, 最大値);
+      return message.substr(0, MAX_LENGTH);
+    }
+    //　文字数がオーバーしていなければそのまま返す
+    return  <p>{message}</p>
+    
   }
-
-  console.log(individualID);
-
+  
     return(
         <>
           <h1 className="text1">カレンダー</h1>
@@ -241,12 +257,11 @@ const Calendar = () => {
           <Calendars
             value={value}
             onChange={handleChange}
-            // onClickDay={handleClickOpen}
+            onClickDay={handleClickOpen}
             tileContent={getTileContent}
             className={classes.calendarUi}
           />
 
-          
           {/* 予定追加モーダル */}
           <Dialog open={openAdd} onClose={handleClose} aria-labelledby="form-dialog-title">
             <DialogTitle id="form-dialog-title">予定</DialogTitle>

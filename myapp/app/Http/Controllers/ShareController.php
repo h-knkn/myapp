@@ -15,11 +15,10 @@ class ShareController extends Controller
      */
     public function index()
     {
-        $shares = Share::where('id',1)->first();
-        return response()->json([
-            'message' => 'ok',
-            'data' => $shares
-        ], 200);
+        $shares = Share::all();
+        return response()->json( 
+            $shares
+        , 200);
     }
 
     /**
@@ -65,9 +64,10 @@ class ShareController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id)
     {
         $update = [
+            'user_id' => $request->user_id,
             'allergies' => $request->allergies,
             'allergies_name' => $request->allergies_name,
             'house_rules' => $request->house_rules,
@@ -75,7 +75,7 @@ class ShareController extends Controller
             'request_to' => $request->request_to,
             'memo' => $request->memo,
         ];
-        $shares = Share::where('id', $id)->update($update);
+        $shares = Share::where('user_id', $user_id)->update($update);
         if ($shares) {
             return response()->json([
                 'message' => '共有事項を変更しました',
