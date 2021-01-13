@@ -7,10 +7,17 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import firebase, { storage } from "../../../../../../firebase/firebase";
 import axios from "axios";
+import {useDispatch, useSelector} from "react-redux";
+import {getUsersId} from '../../../../../../redux/users/selectors';
+import {singOut} from "../../../../../../redux/users/operations";
 import MenuModal from '../../User/Home/MenuModal';
 import star from '../../../../../../public/img/star.png';
 import boy from '../../../../../../public/img/boy.png';
 import girl from '../../../../../../public/img/girl.png';
+import IconButton from '@material-ui/core/IconButton';
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 
@@ -58,17 +65,30 @@ const useStyles = makeStyles((theme) => ({
     changeColor: {
       backgroundColor: 'black',
     },
+    icon: {
+      marginRight: 8,
+      height: 48,
+      width: 48
+    },
+    dialog: {
+      width:'500px',
+      height:'400px',
+    },
 }));
 
 const MyBaby = (props) => {
 
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const selector = useSelector(state => state);
+  const id = getUsersId(selector);
 
   // Babyinfo入力
   const [open, setOpen] = useState(false);
+  const [birth, setBirth] = useState(new Date());
+  const [change , setChange] = useState("");
   const [userData, setUserData] = useState([]);
   const [name , setName] = useState("");
-  const [birth , setBirth] = useState("");
   const [gender , setGender] = useState("");
   const [averagetemperature , setAverageTemperature] = useState("");
   const [memo , setMemo] = useState("");
@@ -81,6 +101,12 @@ const MyBaby = (props) => {
     setOpen(false);
   };
 
+  // newDateをyyyy-mm-dd形式に変える
+    const handleChange = (date) => {
+    var changes = date.toISOString().slice(0, 10);
+    setChange(changes);
+  }
+
   const inputName = useCallback((event) => {
     setName(event.target.value);
   },[setName]);
@@ -91,11 +117,15 @@ const MyBaby = (props) => {
 
   const selectBoy = useCallback((event) => {
     setGender(0);
+    document.getElementById('on').classList.toggle("change-color");
+    document.getElementById('off').classList.remove("change-color");
     console.log("Boy");
   },[setGender]);
 
   const selectGirl = useCallback((event) => {
     setGender(1);
+    document.getElementById('off').classList.toggle("change-color");
+    document.getElementById('on').classList.remove("change-color");
     console.log("Girl");
   },[setGender]);
 
@@ -108,54 +138,86 @@ const MyBaby = (props) => {
     setMemo(event.target.value)
   },[setMemo]);
 
+  //ベイビー情報取得
   useEffect(() => {
-    const getUser = async () => {
-      const response = await axios.get('api/babyinfo');
-        console.log(response.data.data);
-        setUserData(response.data.data);
+    const getInfo = async () => {
+      const response = await axios.get(`api/babyinfo`);
+        const items = response.data;
+        console.log(items);
+        // 配列から指定のオブジェクトを1つだけ取り出す
+        const result = items.find(item => item.user_id === id);
+        console.log(result);
+        setUserData(result);
       }
-      getUser();
+      getInfo();
   },[]);
-  console.log(userData);
 
-  const addInfo = newInfo => {
-    return axios
-        .post('api/babyinfo', newInfo, {
-           headers: {'Content-Type': 'application/json'}
+  //ベイビー情報登録
+  const addBabyInfo = () => {
+    if(name === '' || gender === ''|| averagetemperature ==='' || change === '' || memo === '') {
+      alert('必須項目が未入力です。');
+      return false
+    }
+    if (name.length > 10) {
+      alert('名前は10文字以内で入力してください')
+      return false
+    }
+    if (averagetemperature.length > 10) {
+      alert('平熱は10文字以内で入力してください')
+      return false
+    }
+    if (memo.length > 100) {
+      alert('メモは100文字以内で入力してください')
+      return false
+    }
+    axios
+      .post(`api/babyinfo`, {
+        id: id,
+        user_id: id,
+        name: name,
+        birth: change,
+        gender: gender,
+        average_temperature: averagetemperature,
+        memo: memo,
         })
         .then(res => {
-           console.log(res.data);
-          
+          alert("登録しました。");
+          location.reload();
         })
         .catch(err => {
-           console.log(err)
-        })
-  }
-  const onInfoSubmit = (e) => {
-    e.preventDefault()
-    const newInfo = {
-      name: name,
-      birth: birth,
-      gender: gender,
-      average_temperature: averagetemperature,
-      memo: memo,
-    }
-    addInfo(newInfo).then(res=>{
-      alert("登録しました");
-    })
+          alert("登録に失敗しました。");
+        }); 
   }
 
   // 更新
   const updateInfo = () => {
+    if(name === '' || gender === ''|| averagetemperature ==='' || change === '' || memo === '') {
+      alert('必須項目が未入力です。');
+      return false
+    }
+        if (name.length > 10) {
+      alert('名前は10文字以内で入力してください')
+      return false
+    }
+    if (averagetemperature.length > 10) {
+      alert('平熱は10文字以内で入力してください')
+      return false
+    }
+    if (memo.length > 100) {
+      alert('メモは100文字以内で入力してください')
+      return false
+    }
     const upInfo = {
+      // id: id,
+      user_id: id,
       name: name,
-      birth: birth,
+      birth: change,
       gender: gender,
       average_temperature: averagetemperature,
       memo: memo,
     }
     axios
-      .put('api/babyinfo/1', upInfo)
+      .put(`api/babyinfo/${id}`, upInfo)
       .then(res => {
         console.log("成功！");
       })
@@ -171,21 +233,23 @@ const MyBaby = (props) => {
   const storageRef = firebase.storage().ref();
   
   const [image, setImage] = useState("");
+  const [preview, setPreview] = useState("");
   const [files, setFiles] = useState([]);
-  // const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const handleImage = event => {
     const image = event.target.files[0];
-    setImage(image);
+    setPreview(image);
+    
   };
 
   const onSubmit = event => {
     event.preventDefault();
-    if (image === "") {
+    if (preview === "") {
       console.log("ファイルが選択されていません");
       return;
     }
     // アップロード処理
-    const uploadTask = storage.ref(`/profile/${image.name}`).put(image);
+    const uploadTask = storage.ref(`/profile/${id}/${preview.name}`).put(preview);
     uploadTask.on(
       firebase.storage.TaskEvent.STATE_CHANGED,
       next,
@@ -211,19 +275,20 @@ const MyBaby = (props) => {
     // 完了後の処理
     // 画像表示のため、アップロードした画像のURLを取得
     storage
-      .ref("profile")
-      .child(image.name)
+      .ref(`/profile/${id}/`)
+      .child(preview.name)
       .getDownloadURL()
       .then(fireBaseUrl => {
       setImageUrl(fireBaseUrl);
-      location.reload();
+      // location.reload();
     });
   };
 
+  // プロフィール画像取得
   useEffect(() => {
     const fetchImages = async () => {
 
-    let result = await storageRef.child('profile').listAll();
+    let result = await storageRef.child(`profile/${id}`).listAll();
     let urlPromises = result.items.map(imageRef => imageRef.getDownloadURL());
     console.log(urlPromises);
     return Promise.all(urlPromises);
@@ -235,36 +300,19 @@ const MyBaby = (props) => {
     loadImages();
   }, []);
 
-
-  // ログアウト
-  const logoutButton = (e) => {
-    e.preventDefault()
-    const data = localStorage.getItem('access_token');
-    console.log(data);
-    const res = confirm("ログアウトしますか？");
-    if( res == true ) {
-      localStorage.clear();
-      props.history.push('/');
-    }
-    else {
-      return;
-    }
-  }
-
-
   return (
   <div>
      <h1 className="text1">My Baby</h1>
      <div className={classes.displayFlex}>
       <MenuModal />
-      <Button className={classes.logoutButton} onClick={logoutButton}>
+      <Button className={classes.logoutButton} onClick={() => dispatch(singOut())}>
         ログアウト
       </Button>
     </div>
+    <h2>{id}</h2>
     <div className="contents">
     {!userData ? (
       <div className="info-box">
-        <form className={classes.root} noValidate autoComplete="off" onSubmit={onInfoSubmit}>
           <div className={classes.displayFlex}>
             <img className={classes.star} src={star}/>
             <TextField 
@@ -272,22 +320,22 @@ const MyBaby = (props) => {
             label="名前" 
             value={name}
             onChange={inputName}
-            variant="outlined" />
+            variant="outlined"/>
           </div>
           <div className={classes.displayFlex}>
             <img className={classes.star} src={star}/>
-            <TextField 
-            id="outlined-basic" 
-            label="生年月日"
-            value={birth}
-            onChange={inputBirth} 
-            variant="outlined" />
+            <DatePicker 
+            selected={birth}
+            placeholderText="生年月日"
+            onChange={handleChange}
+            value={change}
+            />
           </div>
           <div className={classes.displayFlex}>
             <img className={classes.star} src={star}/>
             <ul className="mybaby_ul">
-              <li onClick={selectBoy} ><img src={boy}/></li>
-              <li onClick={selectGirl}><img src={girl}/></li>
+              <li id="on" onClick={selectBoy} ><img src={boy}/></li>
+              <li id="off" onClick={selectGirl}><img src={girl}/></li>
             </ul>
           </div>
           <div className={classes.displayFlex}>
@@ -296,7 +344,7 @@ const MyBaby = (props) => {
             label="平熱" 
             value={averagetemperature}
             onChange={inputAverageTemperature} 
-            variant="outlined" />
+            variant="outlined"/>
           </div>
           <div className={classes.displayFlex}>
             <img className={classes.star} src={star}/>
@@ -305,10 +353,9 @@ const MyBaby = (props) => {
             label="メモ" 
             value={memo}
             onChange={inputMemo} 
-            variant="outlined" />
+            variant="outlined"/>
           </div>
-          <Button type="submit" className={classes.upLoadButton}>登録</Button>
-        </form>
+          <Button className={classes.upLoadButton} onClick={addBabyInfo}>登録</Button>
       </div>
       ) : (
         <div>
@@ -322,11 +369,13 @@ const MyBaby = (props) => {
         </div>
         <div className={classes.displayFlex}>
           <img className={classes.star} src={star}/>
-          {userData.gender ==="0" ? (
-                    <p><img src={boy}/></p>
+          <>
+                {userData.gender === 0 ? (
+                     <p><img src={boy}/></p>
                 ) : (
-                  <p><img src={girl}/></p>
-          )}
+                    <p><img src={girl}/></p>
+                )}                
+          </>
         </div>
         <div className={classes.displayFlex}>
           <img className={classes.star} src={star}/>
@@ -340,41 +389,41 @@ const MyBaby = (props) => {
 
         {/* 編集画面モーダル */}
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-          <DialogContent>
+          <DialogContent　className={classes.dialog}>
 
           <TextField
               margin="dense"
-              label={userData.name}
+              placeholder={userData.name}
               value={name}
               onChange={inputName}
               fullWidth
             />
-            <TextField
-              margin="dense"
-              label={userData.birth}
-              value={birth}
-              onChange={inputBirth}
-              fullWidth
+            <DatePicker 
+            selected={birth}
+            placeholderText="生年月日"
+            onChange={handleChange}
+            value={change}
             />
             <div className={classes.displayFlexUpdate}>
               <ul className="mybaby_ul">
-                <li onClick={selectBoy}><img src={boy}/></li>
-                <li onClick={selectGirl}><img src={girl}/></li>
+                <li id="on" onClick={selectBoy}><img src={boy}/></li>
+                <li id="off" onClick={selectGirl}><img src={girl}/></li>
               </ul>
             </div>
             <TextField
               margin="dense"
-              label={userData.average_temperature}
+              placeholder={userData.average_temperature}
               value={averagetemperature}
               onChange={inputAverageTemperature} 
               fullWidth
             />
             <TextField
               margin="dense"
-              label={userData.memo}
+              placeholder={userData.memo}
               value={memo}
               onChange={inputMemo}
               fullWidth
+              rows={5}
             />
             
           </DialogContent>
@@ -391,10 +440,21 @@ const MyBaby = (props) => {
       )}  
         
     <div>
-      <img src={files}/>
+      <div className="img-div">
+        <img src={files}/>
+        <p>{image.name}</p>
+        {/* <img src={preview}/> */}
+      </div>
+    
       <form onSubmit={onSubmit}>
-        <input type="file" onChange={handleImage} />
-        <Button type="submit" className={classes.upLoadButton}>アップロード</Button>
+          <IconButton  className={classes.icon}>
+            <label>
+            <AddPhotoAlternateIcon/>
+            <input type="file" className="display-none" onChange={handleImage}/>
+            </label>
+          </IconButton>
+       
+        <Button type="submit" className={classes.upLoadButton}>プロフィール画像を登録する</Button>
       </form>
     </div>
    

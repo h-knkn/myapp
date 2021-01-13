@@ -9,6 +9,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 
+import {LogIn} from "../../../../redux/users/operations";
+import {push} from "connected-react-router";
+import {useDispatch, useSelector} from "react-redux";
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -38,12 +42,12 @@ const useStyles = makeStyles((theme) => ({
 const LoginModal = (props) => {
 
   const classes = useStyles();
+  const dispatch = useDispatch();
+  // const selector = useSelector((state) => state);
+  // console.log(selector);
 
   const [email , setEmail] = useState("");
   const [password , setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [error, setError] = useState('');
-  const [formSubmitting, setFormSubmitting] = useState('');
 
   const inputEmail = useCallback((event) => {
     setEmail(event.target.value)
@@ -55,49 +59,49 @@ const LoginModal = (props) => {
 
   const history = useHistory();
 
-  const Login = user => {
-    return axios
-        .post('api/login', user, {
-          email: user.email,
-          password: user.password
-        },{
-           headers: {'Content-Type': 'application/json'}
-          })
-        .then(res => {
-          localStorage.setItem('access_token', res.data.access_token);
-          const token = localStorage.getItem('access_token');
-          const isAuth = {setIsLoggedIn:token};
-          console.log(isLoggedIn);
-          // setIsLoggedIn(true);
-          console.log(isAuth);
-          console.log(user.token);
-          if(token){
-            alert('ログインできた');
-            // 入力欄の値であってユーザー情報ではない
-            console.log(user);
-            isAuth ? history.push('/userprofile') : <Redirect to={'/'} />;
-            // if (isLoggedIn === true) {
-            //    history.push('/userprofile');
-            // }
-            // history.push('/userprofile');
-          }
-          return props.handleClose() 
-        })
-        .catch(error => {
-          alert("名前、パスワードが一致しません。");
-        })
-  }
+  // const Login = user => {
+  //   return axios
+  //       .post('api/login', user, {
+  //         email: user.email,
+  //         password: user.password
+  //       },{
+  //          headers: {'Content-Type': 'application/json'}
+  //         })
+  //       .then(res => {
+  //         localStorage.setItem('access_token', res.data.access_token);
+  //         const token = localStorage.getItem('access_token');
+  //         const isAuth = {setIsLoggedIn:token};
+  //         console.log(isLoggedIn);
+  //         // setIsLoggedIn(true);
+  //         console.log(isAuth);
+  //         console.log(user.token);
+  //         if(token){
+  //           alert('ログインできた');
+  //           // 入力欄の値であってユーザー情報ではない
+  //           console.log(user);
+  //           isAuth ? history.push('/userprofile') : <Redirect to={'/'} />;
+  //           // if (isLoggedIn === true) {
+  //           //    history.push('/userprofile');
+  //           // }
+  //           // history.push('/userprofile');
+  //         }
+  //         return props.handleClose() 
+  //       })
+  //       .catch(error => {
+  //         alert("名前、パスワードが一致しません。");
+  //       })
+  // }
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const user = {
-      email: email,
-      password: password
-    }
-    if(user.email && user.password) {
-    Login(user)
-    }
-  }
+  // const onSubmit = (e) => {
+  //   e.preventDefault()
+  //   const user = {
+  //     email: email,
+  //     password: password
+  //   }
+  //   if(user.email && user.password) {
+  //   Login(user)
+  //   }
+  // }
 
 
   return (
@@ -113,23 +117,26 @@ const LoginModal = (props) => {
         <DialogTitle id="alert-dialog-title"　className={classes.title}>ログイン</DialogTitle>
         <DialogContent className={classes.content}>
             <div className={classes.text}> 
-            <form onSubmit={onSubmit}>
+          
               <TextField
               label="メールアドレス"
+              type="email"
               value={email}
               onChange={inputEmail}
               fullWidth
               rows={1}/>
               <TextField
               label="パスワード"
+              type="password"
               value={password}
               onChange={inputPassword}
               fullWidth
               rows={1}/>
-          <Button type="submit" className={classes.signUpButton}>
+          <Button className={classes.signUpButton} onClick={() => dispatch(LogIn(email, password))}>
             ログイン
           </Button>
-                </form>
+          <p onClick={props.onClickReset}>パスワードを忘れた方はこちら</p>
+          
             </div>
         </DialogContent>
         <DialogActions>

@@ -4,6 +4,10 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import login_modal from '../../../../public/img/login_modal.png';
+import {getUsersId} from '../../../../redux/users/selectors';
+import {useSelector} from "react-redux";
+
+
 
 
 
@@ -28,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
 
 const Top = (props) => {
     const classes = useStyles();
+
+    const selector = useSelector(state => state);
     
     const style = {
        textAlign: 'right',

@@ -1,7 +1,6 @@
 import React , {useState, useEffect, useCallback} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
-
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -20,7 +19,9 @@ import { useHistory } from 'react-router-dom';
 import baby from '../../../../../../public/img/baby.png';
 import { withRouter } from 'react-router-dom';
 import DatePicker from "react-datepicker"
-import "react-datepicker/dist/react-datepicker.css"
+import "react-datepicker/dist/react-datepicker.css";
+import {useDispatch, useSelector} from "react-redux";
+import {getUsersId} from '../../../../../../redux/users/selectors';
 
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -40,7 +41,9 @@ const useStyles = makeStyles({
 const FirstMemoryData = (props) => {
 
     const classes = useStyles();
-
+    const dispatch = useDispatch();
+    const selector = useSelector(state => state);
+    const individualID = getUsersId(selector);
     const history = useHistory();
 
     const { userData, setUserData, allergies, startDate ,first , setFirst, memo, setMemo, change, setChange} = props;
@@ -99,11 +102,25 @@ const FirstMemoryData = (props) => {
     }
     // 更新
     const updateFirstInfo = (e) => {
-        const upInfo = {
+      if(first === '' || change === ''|| memo === '') {
+        alert('必須項目が未入力です。');
+        return false
+      }
+      if (first.length > 20) {
+        alert('タイトルは20文字以内で入力してください')
+        return false
+      }
+      if (memo.length > 100) {
+        alert('メモは100文字以内で入力してください')
+        return false
+      }
+      
+      const upInfo = {
+            user_id: individualID,
             first: first,
             date: change,
             memo: memo,
-        }
+      }
         console.log(detailId);
         axios
         .put(`api/firstmemory/${detailId}`, upInfo)
@@ -147,8 +164,8 @@ const FirstMemoryData = (props) => {
                 handleClickOpen();
                 handleRowClick(e);
               }} data-id={row.id}>
-                <TableCell  align="center">{row.first}</TableCell>
-                <TableCell  align="center">{row.date}</TableCell>
+                <TableCell align="center">{row.first}</TableCell>
+                <TableCell align="center">{row.date}</TableCell>
               </TableRow>
             ))}
           </TableBody>

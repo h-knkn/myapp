@@ -1,4 +1,5 @@
 import React from "react";
+import Auth from './Auth';
 import {
     BrowserRouter as Router,
     Switch,
@@ -20,20 +21,20 @@ import {
 
 const Routes = () => {
     return(
-        <Router>
+     
         <Switch>
           <Route path="/" exact component={MainPage}/>
         
+        <Auth>
           <Route path="/userprofile" exact component={UserPage}/>
           <Route path="/babyprofile" exact component={MyBaby}/>
           <Route path="/firstmemory" exact component={FirstMemory}/>
           <Route path="/share" exact component={ShareInfo}/>
           <Route path="/calendar" exact component={Calendar}/>
+        </Auth>
         
- 
-           {/* <PrivateRoute path='/userprofile' exact component={UserPage}/> */}
         </Switch>
-        </Router>
+    
     )
 }
 

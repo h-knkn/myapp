@@ -7,7 +7,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from "axios";
-import { useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form';
+
+import {signUp} from "../../../../redux/users/operations";
+import {push} from "connected-react-router";
+import {useDispatch, useSelector} from "react-redux";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -40,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 
 const SignupModal = (props) => {
 
+  const dispatch = useDispatch();
+  // const selector = useSelector((state) => state);
   const classes = useStyles();
 
   const [name , setName] = useState("");
@@ -63,43 +69,42 @@ const SignupModal = (props) => {
     setPassword_confirmation(event.target.value)
   },[setPassword_confirmation]);
 
-  const Register = newUser => {
-    return axios
-        .post('api/register', newUser, {
-           headers: {'Content-Type': 'application/json'}
-        })
-        .then(res => {
-           console.log(res.data);
-           setName("") 
-           setEmail("") 
-           setPassword("") 
-           setPassword_confirmation("")
-           return props.handleClose() 
-        })
-        .catch(err => {
-           console.log(err)
-        })
-  }
+  // const Register = newUser => {
+  //   return axios
+  //       .post('api/register', newUser, {
+  //          headers: {'Content-Type': 'application/json'}
+  //       })
+  //       .then(res => {
+  //          console.log(res.data);
+  //          setName("") 
+  //          setEmail("") 
+  //          setPassword("") 
+  //          setPassword_confirmation("")
+  //          return props.handleClose() 
+  //       })
+  //       .catch(err => {
+  //          console.log(err)
+  //       })
+  // }
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-    const newUser = {
-      name: name,
-      email: email,
-      password: password,
-      password_confirmation: password_confirmation
-    }
-    Register(newUser).then(res=>{
-      alert("登録しました。ログインしてください");
-      return props.onClickLogin()
+  // const onSubmit = (e) => {
+  //   e.preventDefault()
+  //   const newUser = {
+  //     name: name,
+  //     email: email,
+  //     password: password,
+  //     password_confirmation: password_confirmation
+  //   }
+  //   Register(newUser).then(res=>{
+  //     alert("登録しました。ログインしてください");
+  //     return props.onClickLogin();
       
-    })
-  }
+  //   })
+  // }
 
   return (
 
     <div>
-      <form onSubmit={onSubmit}>
       <Dialog
         open={props.open}
         onClose={props.handleClose}
@@ -115,11 +120,11 @@ const SignupModal = (props) => {
                 onChange={inputName}
                 fullWidth
                 name="name"
-                inputRef={register({ required:"名前を入力してください" , maxLength: 10 })}
                 rows={1}/>
 
                 <TextField
                 label="メールアドレス"
+                type="email"
                 value={email}
                 onChange={inputEmail}
                 fullWidth
@@ -127,12 +132,14 @@ const SignupModal = (props) => {
 
                 <TextField
                 label="パスワード"
+                type="password"
                 value={password}
                 onChange={inputPassword}
                 fullWidth
                 rows={1}/>
                 <TextField
                 label="パスワード確認"
+                type="password"
                 value={password_confirmation}
                 onChange={inputPassword_confirmation}
                 fullWidth
@@ -141,12 +148,11 @@ const SignupModal = (props) => {
         </DialogContent>
         <p className={classes.toLogin} onClick={props.onClickLogin}>ログインはこちら</p>
         <DialogActions>
-          <Button type="submit" className={classes.signUpButton}>
+          <Button className={classes.signUpButton} onClick={() => dispatch(signUp(name, email, password, password_confirmation))}>
             登録
           </Button>
         </DialogActions>
       </Dialog>
-      </form>
     </div>
   );
 }

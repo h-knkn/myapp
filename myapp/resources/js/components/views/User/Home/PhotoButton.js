@@ -9,7 +9,10 @@ import Slide from '@material-ui/core/Slide';
 import { makeStyles } from '@material-ui/core/styles';
 import firebase, { storage } from "../../../../../../firebase/firebase";
 import Slider from "react-slick";
-
+import IconButton from '@material-ui/core/IconButton';
+import AddPhotoAlternateIcon from '@material-ui/icons/AddPhotoAlternate';
+import {useDispatch, useSelector} from "react-redux";
+import {getUsersId} from '../../../../../../redux/users/selectors';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -21,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
     addPhotoText: {
         fontSize: '15px',
         textAlign: 'center',
+    },
+    icon: {
+        marginRight: 8,
+        height: 48,
+        width: 48
     },
     PhotoButton: {
       margin: 'auto',
@@ -44,6 +52,9 @@ const PhotoButton = () => {
     };
 
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const selector = useSelector(state => state);
+    const id = getUsersId(selector);
 
     var storageRef = firebase.storage().ref();
   
@@ -72,7 +83,7 @@ const PhotoButton = () => {
           return;
         }
         // アップロード処理
-        const uploadTask = storage.ref(`/images/${image.name}`).put(image);
+        const uploadTask = storage.ref(`/images/${id}/${image.name}`).put(image);
         uploadTask.on(
           firebase.storage.TaskEvent.STATE_CHANGED,
           next,
@@ -99,7 +110,7 @@ const PhotoButton = () => {
         // 完了後の処理
         // 画像表示のため、アップロードした画像のURLを取得
         storage
-          .ref("images")
+          .ref(`/images/${id}/`)
           .child(image.name)
           .getDownloadURL()
           .then(fireBaseUrl => {
@@ -110,10 +121,8 @@ const PhotoButton = () => {
 
     useEffect(() => {
     const fetchImages = async () => {
-    let result = await storageRef.child('images').listAll();
+    let result = await storageRef.child(`/images/${id}/`).listAll();
         let urlPromises = result.items.map(imageRef => imageRef.getDownloadURL());
-    
-        console.log(result);
         console.log(urlPromises);
         console.log(files);
         console.log(image);
@@ -142,7 +151,7 @@ const PhotoButton = () => {
         var httpsReference = storage.refFromURL(pickImage);
         // ファイル名取得
         let fileName = httpsReference.name;
-        var desertRef = storageRef.child(`/images/${fileName}`);
+        var desertRef = storageRef.child(`/images/${id}/${fileName}`);
         console.log(fileName);
         
         desertRef.delete().then(function() {
@@ -156,19 +165,25 @@ const PhotoButton = () => {
 
     return(
         <div>
-            <h3 className={classes.addPhotoText}>写真を登録してね</h3>
+            {/* <h3 className={classes.addPhotoText}>写真を登録してね</h3> */}
             <div className="addphoto">
+            <p>{image.name}</p>
             <form onSubmit={onSubmit}>
-                <input type="file" onChange={handleImage} />
-                <Button type="submit" className={classes.PhotoButton}>登録</Button>
+                <IconButton  className={classes.icon}>
+                    <label>
+                        <AddPhotoAlternateIcon/>
+                        <input type="file" className="display-none" onChange={handleImage}/>
+                    </label>
+                </IconButton>
+                {/* <input type="file" onChange={handleImage} /> */}
+                <Button type="submit" className={classes.PhotoButton}>写真を登録する</Button>
             </form>
             </div>
             {/* <img src={imageUrl} /> */}
-            <Button className={classes.PhotoButton} onClick={deletePhtot}>削除</Button>
-
-            <Slider {...settings} >            
-                {files.map((file, index) => (
-                    <img key={'unique_key_string' + index} src={file} onClick={showPhoto}/>
+            <Slider {...settings} >   
+                {files.length > 0 && (         
+                files.map((file, index) => (
+                    <img key={'unique_key_string' + index} src={file} onClick={showPhoto}/>)
                 ))}
             </Slider>
 

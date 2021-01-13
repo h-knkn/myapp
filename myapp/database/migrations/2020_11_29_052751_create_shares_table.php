@@ -15,6 +15,7 @@ class CreateSharesTable extends Migration
     {
         Schema::create('shares', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedBigInteger('user_id');
             $table->integer('allergies');
             $table->string('allergies_name',30)->nullable();
             $table->string('house_rules',500);
@@ -22,6 +23,10 @@ class CreateSharesTable extends Migration
             $table->string('request_to', 500);
             $table->string('memo', 500);
             $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

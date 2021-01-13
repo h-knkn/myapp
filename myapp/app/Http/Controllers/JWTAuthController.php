@@ -10,6 +10,29 @@ use Illuminate\Support\Facades\Auth;
 
 class JWTAuthController extends Controller
 {
+
+    public function index()
+    {
+        $user = User::all();
+        return response()->json(
+            $user
+        , 200, [], JSON_UNESCAPED_UNICODE);
+    }
+
+    public function show($email)
+    {
+        $user = User::where('email', $email)->first();
+        if ($user) {
+            return response()->json(
+                 $user
+            , 200, [], JSON_UNESCAPED_UNICODE);
+        } else {
+            return response()->json([
+                'message' => 'ok',
+            ], 404);
+        }
+    }
+
     public function register(Request $request) {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:100',

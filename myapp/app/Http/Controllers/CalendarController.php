@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Calendar;
+use Illuminate\Support\Facades\Auth;
 
 class CalendarController extends Controller
 {
@@ -66,6 +67,7 @@ class CalendarController extends Controller
     public function update(Request $request, $id)
     {
         $update = [
+            'user_id' => $request->user_id,
             'title' => $request->title,
             'date' => $request->date,
             // 'end_time' => $request->end_time,
